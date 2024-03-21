@@ -1,13 +1,13 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { BellIcon, MoonIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Navbar = ( {toggleDarkMode} ) => {
+const Navbar = ({ toggleDarkMode }) => {
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -32,15 +32,16 @@ const Navbar = ( {toggleDarkMode} ) => {
                 <div className="flex items-center">
                   <button
                     type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative rounded-full bg-gray-800 p-1 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
 
-                  <button onClick={toggleDarkMode}> toggle </button>
-                  
+                  <button onClick={toggleDarkMode} className="text-gray-200">
+                    <MoonIcon className="h-6 w-6" />{' '}
+                  </button>
+
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
