@@ -11,9 +11,8 @@ const CreateTeam = ({ user }) => {
     const newTeam = {
       name: formRef.name.current.value,
       manager: user.id,
-      pic: formRef.pic.current.value
+      avatar: formRef.avatar.current.value
     }
-    console.log(newTeam)
     await axios.post(`${BASE_URL}/teams`, newTeam)
     e.target.reset()
   }
