@@ -12,7 +12,7 @@ function App() {
   return (
     <div className={`${darkMode && 'dark'}`}>
       <Navbar toggleDarkMode={toggleDarkMode} />
-      <main className="dark:bg-gray-900   bg-neutral-100 h-screen">
+      <main className="dark:bg-gray-900   bg-neutral-100 h-screen pt-4">
         <Routes>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/createteam" element={<CreateTeam />}></Route>
