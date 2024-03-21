@@ -1,8 +1,8 @@
-# TrackIt.
+# TrackTix
 ![](https://cdn.discordapp.com/attachments/1220062103574937722/1220098944994906233/image.png?ex=660db4b0&is=65fb3fb0&hm=4d3ee42967e13479b93756b23b1e1c9ae85131f2430fb37659266839d4aad300&)
 
 
-## About TrackIt
+## About TrackTix
 
  The main purpose and unique selling points of our ticketing system is to emphasize tracking and management capabilities for a specific team.
 
