@@ -7,7 +7,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Navbar = () => {
+const Navbar = ( {toggleDarkMode} ) => {
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -38,6 +38,9 @@ const Navbar = () => {
                     <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
+
+                  <button onClick={toggleDarkMode}> toggle </button>
+                  
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
