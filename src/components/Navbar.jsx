@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon } from '@heroicons/react/24/outline'
+import { BellIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 
 function classNames(...classes) {
@@ -15,13 +15,14 @@ const Navbar = () => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <div className="flex-shrink-0 text-white">
-                  Logo
-                </div>
+                <div className="flex-shrink-0 text-white">Logo</div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-                    <Link to="/" className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white">
+                    <Link
+                      to="/"
+                      className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                    >
                       Teams
                     </Link>
                   </div>
@@ -29,19 +30,20 @@ const Navbar = () => {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex items-center">
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
+                  <button
+                    type="button"
+                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  >
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">View notifications</span>
+                    <BellIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
                       <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
+
                         <img
                           className="h-8 w-8 rounded-full"
                           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -72,18 +74,18 @@ const Navbar = () => {
                             </a>
                           )}
                         </Menu.Item>
-                        
+
                         <Menu.Item>
                           {({ active }) => (
-                            <a
-                              href="#"
+                            <Link
+                              to="/Register"
                               className={classNames(
                                 active ? 'bg-gray-100' : '',
                                 'block px-4 py-2 text-sm text-gray-700'
                               )}
                             >
-                              Sign out
-                            </a>
+                              Register
+                            </Link>
                           )}
                         </Menu.Item>
                       </Menu.Items>
@@ -93,8 +95,6 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-
-          
         </>
       )}
     </Disclosure>
