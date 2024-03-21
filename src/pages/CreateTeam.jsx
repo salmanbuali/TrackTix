@@ -13,6 +13,7 @@ const CreateTeam = ({ user }) => {
       manager: user.id,
       pic: formRef.pic.current.value
     }
+    console.log(newTeam)
     await axios.post(`${BASE_URL}/teams`, newTeam)
     e.target.reset()
   }
@@ -25,14 +26,14 @@ const CreateTeam = ({ user }) => {
       <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
         <div className="mb-5">
           <label
-            for="name"
+            htmlFor="name"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Team Name:
           </label>
           <input
             type="text"
-            id="text"
+            id="name"
             className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
             ref={formRef.name}
@@ -40,13 +41,13 @@ const CreateTeam = ({ user }) => {
         </div>
         <div className="mb-5">
           <label
-            for="avatar"
+            htmlFor="avatar"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Team Avatar
           </label>
           <input
-            type="avatar"
+            type="text"
             id="avatar"
             className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
