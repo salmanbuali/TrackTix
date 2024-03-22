@@ -4,6 +4,7 @@ import {
   UserIcon,
   DevicePhoneMobileIcon
 } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
 
 const Register = () => {
   let invalid = false
@@ -13,7 +14,7 @@ const Register = () => {
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
           >
             Name
           </label>
@@ -25,7 +26,7 @@ const Register = () => {
               type="text"
               name="name"
               id="name"
-              className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900"
+              className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
               placeholder="First and Last name"
             />
           </div>
@@ -33,7 +34,7 @@ const Register = () => {
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
           >
             Email
           </label>
@@ -45,7 +46,7 @@ const Register = () => {
               type="email"
               name="email"
               id="email"
-              className={`block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900 ${
+              className={`block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white ${
                 invalid
                   ? 'text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-red-500'
                   : ''
@@ -59,7 +60,7 @@ const Register = () => {
         <div>
           <label
             htmlFor="password"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
           >
             Password
           </label>
@@ -71,7 +72,7 @@ const Register = () => {
               type="password"
               name="password"
               id="password"
-              className="block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900"
+              className="block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
               placeholder="Password"
             />
           </div>
@@ -79,7 +80,7 @@ const Register = () => {
         <div>
           <label
             htmlFor="passwordCheck"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
           >
             Confirm Password
           </label>
@@ -91,7 +92,7 @@ const Register = () => {
               type="password"
               name="passwordCheck"
               id="passwordCheck"
-              className="block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900"
+              className="block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
               placeholder="Confirm your password"
             />
           </div>
@@ -99,7 +100,7 @@ const Register = () => {
         <div>
           <label
             htmlFor="phone"
-            className="block text-sm font-medium leading-6 text-gray-900"
+            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
           >
             Phone
           </label>
@@ -111,11 +112,20 @@ const Register = () => {
               type="text"
               name="phone"
               id="phone"
-              className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-900"
+              className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
               placeholder="Your number"
             />
           </div>
         </div>
+        <button
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 mt-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Register
+        </button>
+        <Link to="/login" className="m-auto underline dark:text-white">
+          Have an account ? Login
+        </Link>
       </div>
     </div>
   )

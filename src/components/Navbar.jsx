@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MoonIcon } from '@heroicons/react/24/outline'
+import { BellIcon, MoonIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 
 function classNames(...classes) {
@@ -15,14 +15,21 @@ const Navbar = ({ toggleDarkMode }) => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <div className="flex-shrink-0 text-white">Logo</div>
+                <div className="flex-shrink-0 text-white flex items-center">
+                  <img
+                    src="/favicon.ico"
+                    alt="logo"
+                    style={{ filter: 'invert(1)' }}
+                  />
+                  <p>&nbsp; TrackTix</p>
+                </div>
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
+                  <div className="flex items-center">
                     <Link
                       to="/"
-                      className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                      className="flex items-center rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                     >
+                      <UserGroupIcon className="h-6 w-6 mr-1" />
                       Teams
                     </Link>
                   </div>
@@ -39,7 +46,7 @@ const Navbar = ({ toggleDarkMode }) => {
                   </button>
 
                   <button onClick={toggleDarkMode} className="text-gray-200">
-                    <MoonIcon className="h-6 w-6" />{' '}
+                    <MoonIcon className="h-6 w-6" />
                   </button>
 
                   {/* Profile dropdown */}

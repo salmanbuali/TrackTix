@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Register from './pages/Register'
+import Login from './pages/Login'
 import { useState } from 'react'
 import Navbar from './components/Navbar'
 import CreateTeam from './pages/CreateTeam'
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/createteam" element={<CreateTeam />}></Route>
+          <Route path="/login" element={<Login />}></Route>
         </Routes>
       </main>
     </div>
