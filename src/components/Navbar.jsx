@@ -1,13 +1,13 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { BellIcon, MoonIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Navbar = ( {toggleDarkMode} ) => {
+const Navbar = ({ toggleDarkMode }) => {
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -15,14 +15,21 @@ const Navbar = ( {toggleDarkMode} ) => {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
-                <div className="flex-shrink-0 text-white">Logo</div>
+                <div className="flex-shrink-0 text-white flex items-center">
+                  <img
+                    src="/favicon.ico"
+                    alt="logo"
+                    style={{ filter: 'invert(1)' }}
+                  />
+                  <p>&nbsp; TrackTix</p>
+                </div>
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex space-x-4">
-                    {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
+                  <div className="flex items-center">
                     <Link
-                      to="/"
-                      className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                      to="/teams"
+                      className="flex items-center rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                     >
+                      <UserGroupIcon className="h-6 w-6 mr-1" />
                       Teams
                     </Link>
                   </div>
@@ -32,15 +39,16 @@ const Navbar = ( {toggleDarkMode} ) => {
                 <div className="flex items-center">
                   <button
                     type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="relative rounded-full bg-gray-800 p-1 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   >
                     <span className="absolute -inset-1.5" />
-                    <span className="sr-only">View notifications</span>
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
                   </button>
 
-                  <button onClick={toggleDarkMode}> toggle </button>
-                  
+                  <button onClick={toggleDarkMode} className="text-gray-200">
+                    <MoonIcon className="h-6 w-6" />
+                  </button>
+
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
