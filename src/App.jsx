@@ -50,8 +50,6 @@ function App() {
           <Route path="/teams" element={<Teams user={user} />}></Route>
           <Route path="/teams/:id" element={<ViewTeam user={user} />}></Route>
         </Routes>
-
-        <Tickets />
       </main>
     </div>
   )

@@ -9,16 +9,17 @@ function classNames(...classes) {
 const Tickets = () => {
   // don't delete
   const statuses = {
-    Complete: 'text-green-900 bg-green-200 ring-green-600/20',
-    Processing: 'text-indigo-900 bg-indigo-200 ring-indigo-400/30',
-    Pending: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20'
+    Complete: 'text-green-900 dark:text-black bg-green-200 ring-green-600/20',
+    Processing:
+      'text-indigo-900 dark:text-black bg-indigo-200 ring-indigo-400/30',
+    Pending: 'text-yellow-800 dark:text-black bg-yellow-50 ring-yellow-600/20'
   }
   // don't delete
   const prios = {
-    Low: 'text-black bg-yellow-300 ring-yellow-600/20',
-    Mid: 'text-indigo-900 bg-indigo-200 ring-indigo-400/30',
-    High: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
-    Urgent: ''
+    Low: 'text-white dark:text-black bg-amber-400 ring-yellow-600/20',
+    Mid: 'text-white dark:text-black bg-orange-400 ring-indigo-400/30',
+    High: 'text-white dark:text-black bg-orange-600 ring-yellow-600/20',
+    Urgent: 'text-white dark:text-black bg-red-600 ring-yellow-600/20'
   }
 
   // delete tickets after getting real tickets
@@ -28,7 +29,7 @@ const Tickets = () => {
       name: 'GraphQL API',
       href: '#',
       status: 'Complete',
-      prio: 'Low',
+      prio: 'Urgent',
       createdBy: 'Leslie Alexander',
       solvedBy: 'Leslie Alexander',
       due: 'March 17, 2023'
@@ -50,11 +51,20 @@ const Tickets = () => {
       prio: 'High',
       createdBy: 'Courtney Henry',
       due: 'May 25, 2023'
+    },
+    {
+      id: 4,
+      name: 'Analysis',
+      href: '#',
+      status: 'Pending',
+      prio: 'Low',
+      createdBy: 'Courtney Henry',
+      due: 'May 25, 2023'
     }
   ]
 
   return (
-    <ul role="list" className="divide-y divide-gray-100 w-2/3 m-auto">
+    <ul role="list" className="divide-y divide-gray-300 w-2/3 m-auto">
       {tickets.map((ticket) => (
         <li
           key={ticket.id}
@@ -74,7 +84,7 @@ const Tickets = () => {
                 {ticket.status}
               </p>
             </div>
-            <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+            <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500 dark:text-gray-300">
               <p className="whitespace-nowrap">
                 Due on <time dateTime={ticket.due}>{ticket.due}</time>
               </p>
@@ -103,7 +113,7 @@ const Tickets = () => {
             </p>
             <a
               href={ticket.href}
-              className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
+              className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-90shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block dark:text-gray-200 dark:bg-gray-400/10"
             >
               View ticket<span className="sr-only">, {ticket.name}</span>
             </a>
