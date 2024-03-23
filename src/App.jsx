@@ -35,7 +35,10 @@ function App() {
       <main className="dark:bg-gray-900   bg-neutral-100 h-screen pt-4">
         <Routes>
           <Route path="/register" element={<Register />}></Route>
-          <Route path="/createteam" element={<CreateTeam />}></Route>
+          <Route
+            path="/createteam"
+            element={<CreateTeam user={user} />}
+          ></Route>
           <Route path="/login" element={<Login setUser={setUser} />}></Route>
           <Route path="/teams" element={<Teams />}></Route>
         </Routes>
