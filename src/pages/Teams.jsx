@@ -2,6 +2,7 @@ import Client from '../services/api'
 import { Link } from 'react-router-dom'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect } from 'react'
+import Invites from '../components/Invites'
 
 const Teams = ({ user }) => {
   const [teams, setTeams] = useState([])
@@ -15,6 +16,7 @@ const Teams = ({ user }) => {
 
   return teams.length ? (
     <div className="w-3/4 m-auto">
+      <Invites user={user} />
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-medium text-gray-500 dark:text-white">
           Teams
