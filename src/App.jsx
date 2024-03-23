@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import CreateTeam from './pages/CreateTeam'
 import ViewTeam from './pages/ViewTeam'
-import Members from './components/Members'
+import Tickets from './components/Tickets'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -50,6 +50,8 @@ function App() {
           <Route path="/teams" element={<Teams user={user} />}></Route>
           <Route path="/teams/:id" element={<ViewTeam user={user} />}></Route>
         </Routes>
+
+        <Tickets />
       </main>
     </div>
   )
