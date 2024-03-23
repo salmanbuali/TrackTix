@@ -1,16 +1,22 @@
 import { useEffect, useRef } from 'react'
 import Client from '../services/api'
-const InviteMember = ({ user, teamId }) => {
+const InviteMember = ({ userId, teamId, members }) => {
   const email = useRef('')
 
   const invite = async () => {
-    const invite = {
-      sender: user.id,
-      email: email.current.value,
-      team: teamId
+    const teamMembers = members.map((member) => member.email)
+    console.log(email.current.value)
+    if (!teamMembers.includes(email.current.value)) {
+      const invite = {
+        sender: userId,
+        email: email.current.value,
+        team: teamId
+      }
+      await Client.post('/invites', invite)
+      email.current.value = ''
+    } else {
+      console.log('already a member')
     }
-    await Client.post('/invites', invite)
-    email.current.value = ''
   }
 
   return (
