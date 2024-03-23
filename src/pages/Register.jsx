@@ -5,9 +5,37 @@ import {
   DevicePhoneMobileIcon
 } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
+import { RegisterUser } from '../services/Auth'
+import { useNavigate } from 'react-router-dom'
+import { useRef } from 'react'
 
 const Register = () => {
+  let navigate = useNavigate()
   let invalid = false
+  const formRef = {
+    name: useRef(null),
+    email: useRef(null),
+    password: useRef(null),
+    confirmPassword: useRef(null),
+    phone: useRef(null)
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    if (
+      formRef.password.current.value === formRef.confirmPassword.current.value
+    ) {
+      await RegisterUser({
+        name: formRef.name.current.value,
+        email: formRef.email.current.value,
+        password: formRef.password.current.value,
+        phone: formRef.phone.current.value
+      })
+      navigate('/login')
+    } else {
+      invalid = true
+    }
+  }
   return (
     <div className="flex justify-center">
       <div className="w-1/4 flex justify-center flex-col gap-3">
@@ -28,6 +56,7 @@ const Register = () => {
               id="name"
               className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
               placeholder="First and Last name"
+              ref={formRef.name}
             />
           </div>
         </div>
@@ -54,6 +83,7 @@ const Register = () => {
               placeholder={` ${
                 invalid ? 'Not a valid email address' : 'you@example.com'
               }`}
+              ref={formRef.email}
             />
           </div>
         </div>
@@ -74,6 +104,7 @@ const Register = () => {
               id="password"
               className="block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
               placeholder="Password"
+              ref={formRef.password}
             />
           </div>
         </div>
@@ -94,6 +125,7 @@ const Register = () => {
               id="passwordCheck"
               className="block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
               placeholder="Confirm your password"
+              ref={formRef.confirmPassword}
             />
           </div>
         </div>
@@ -114,10 +146,12 @@ const Register = () => {
               id="phone"
               className="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
               placeholder="Your number"
+              ref={formRef.phone}
             />
           </div>
         </div>
         <button
+          onClick={handleSubmit}
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 mt-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >

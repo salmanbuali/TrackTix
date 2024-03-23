@@ -1,36 +1,17 @@
+import Client from '../services/api'
 import { Link } from 'react-router-dom'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect } from 'react'
 
-const Teams = () => {
-  const teams = [
-    {
-      name: 'Graph API',
-      href: '#',
-      members: 16,
-      avatar:
-        'https://www.drupal.org/files/styles/grid-3-2x/public/project-images/Graph%20API%20logo.png?itok=B8Gk4HZb'
-    },
-    {
-      name: 'Design Team',
-      href: '#',
-      members: 12,
-      avatar:
-        'https://media.istockphoto.com/id/1303269536/vector/d-style-logo-icon-shape.jpg?s=612x612&w=0&k=20&c=TEmq8HzDGokNqTRIHSbLyiCD5zk_15lZZuGfBATiIlk='
-    },
-    {
-      name: 'System testing',
-      href: '#',
-      members: 16,
-      avatar: 'https://www.infoicontechnologies.com/img/system-testing.jpg'
-    },
-    {
-      name: 'React Team',
-      href: '#',
-      members: 8,
-      avatar:
-        'https://static-00.iconduck.com/assets.00/react-icon-2048x2048-o8k3ymqa.png'
+const Teams = ({ user }) => {
+  const [teams, setTeams] = useState([])
+  useEffect(() => {
+    const getTeams = async () => {
+      const response = await Client.get(`/users/teams/${user?.id}`)
+      setTeams(response)
     }
-  ]
+    getTeams()
+  }, [])
 
   return (
     <div className="w-3/4 m-auto">
@@ -54,7 +35,7 @@ const Teams = () => {
         className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
       >
         {teams.map((team) => (
-          <Link to={`/`} key={team.name}>
+          <Link to={`/teams/${team._id}`} key={team.name}>
             <li className="col-span-1 flex rounded-md shadow-md overflow-hidden">
               <div className="flex items-center justify-center rounded-l-md text-white bg-white w-16 h-16">
                 <img
@@ -71,7 +52,7 @@ const Teams = () => {
                   >
                     {team.name}
                   </a>
-                  <p className="text-gray-500">{team.members} Members</p>
+                  <p className="text-gray-500">{team.members.length} Members</p>
                 </div>
               </div>
             </li>

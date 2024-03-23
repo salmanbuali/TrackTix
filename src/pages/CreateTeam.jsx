@@ -1,3 +1,4 @@
+import Client from '../services/api'
 import { useRef } from 'react'
 const CreateTeam = ({ user }) => {
   const formRef = {
@@ -7,13 +8,12 @@ const CreateTeam = ({ user }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const BASE_URL = import.meta.env.VITE_BASE_URL
     const newTeam = {
       name: formRef.name.current.value,
       manager: user.id,
       avatar: formRef.avatar.current.value
     }
-    await axios.post(`${BASE_URL}/teams`, newTeam)
+    await Client.post(`/teams`, newTeam)
     e.target.reset()
   }
 
