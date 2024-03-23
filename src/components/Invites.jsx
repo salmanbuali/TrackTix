@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Client from '../services/api'
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 
 const Invites = ({ user }) => {
   const [invites, setInvites] = useState([])
@@ -26,11 +27,14 @@ const Invites = ({ user }) => {
 
   return invites ? (
     <div>
-      <h1>Invites</h1>
+      <p className="text-sm font-medium text-gray-500 dark:text-white">
+        Invites
+      </p>
       {invites?.map((invite) => (
-        <div key={invite._id}>
+        <div key={invite._id} className="flex flex-row justify-between items-center mt-2">
           <h2>
-            from {invite.sender.name} to join {invite.team.name}
+            <strong>{invite.sender.name}</strong> has invited you to join{' '}
+            <strong>{invite.team.name}</strong>
           </h2>
           <div class="inline-flex rounded-md shadow-sm" role="group">
             <button
@@ -38,8 +42,9 @@ const Invites = ({ user }) => {
                 accept(invite._id)
               }}
               type="button"
-              class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+              class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white flex items-center gap-1"
             >
+              <CheckCircleIcon className="w-5 h-5" />
               Accept
             </button>
             <button
@@ -47,8 +52,9 @@ const Invites = ({ user }) => {
                 decline(invite._id)
               }}
               type="button"
-              class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white"
+              class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white flex items-center gap-1"
             >
+              <XCircleIcon className="w-5 h-5" />
               Decline
             </button>
           </div>

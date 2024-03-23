@@ -7,7 +7,9 @@ import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import CreateTeam from './pages/CreateTeam'
 import ViewTeam from './pages/ViewTeam'
+import Invites from './components/Invites'
 import CreateTicket from './pages/CreateTicket'
+
 
 function App() {
   const [user, setUser] = useState(null)
