@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import CreateTeam from './pages/CreateTeam'
 import ViewTeam from './pages/ViewTeam'
+import Invites from './components/Invites'
 
 function App() {
   const [user, setUser] = useState(null)
