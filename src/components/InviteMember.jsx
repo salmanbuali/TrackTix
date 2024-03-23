@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react'
-import Client from '../services/api'
+import { useEffect, useRef } from "react"
+import Client from "../services/api"
 const InviteMember = ({ userId, teamId, members }) => {
-  const email = useRef('')
+  const email = useRef("")
 
   const invite = async () => {
     const teamMembers = members.map((member) => member.email)
@@ -9,13 +9,16 @@ const InviteMember = ({ userId, teamId, members }) => {
     if (!teamMembers.includes(email.current.value)) {
       const invite = {
         sender: userId,
-        email: email.current.value,
-        team: teamId
+        member: email.current.value,
+        team: teamId,
       }
-      await Client.post('/invites', invite)
-      email.current.value = ''
+      console.log(invite)
+      const res = await Client.post("/invites", invite)
+      console.log(res)
+
+      email.current.value = ""
     } else {
-      console.log('already a member')
+      console.log("already a member")
     }
   }
 
