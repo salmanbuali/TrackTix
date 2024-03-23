@@ -40,7 +40,7 @@ function App() {
             element={<CreateTeam user={user} />}
           ></Route>
           <Route path="/login" element={<Login setUser={setUser} />}></Route>
-          <Route path="/teams" element={<Teams />}></Route>
+          <Route path="/teams" element={<Teams user={user} />}></Route>
         </Routes>
       </main>
     </div>

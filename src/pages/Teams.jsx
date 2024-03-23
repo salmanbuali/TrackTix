@@ -7,13 +7,13 @@ const Teams = ({ user }) => {
   const [teams, setTeams] = useState([])
   useEffect(() => {
     const getTeams = async () => {
-      const response = await Client.get(`/users/teams/${user?.id}`)
-      setTeams(response)
+      const response = await Client.get(`/users/${user?.id}/teams`)
+      setTeams(response.data)
     }
     getTeams()
   }, [])
 
-  return (
+  return teams ? (
     <div className="w-3/4 m-auto">
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-medium text-gray-500 dark:text-white">
@@ -60,6 +60,8 @@ const Teams = ({ user }) => {
         ))}
       </ul>
     </div>
+  ) : (
+    <></>
   )
 }
 
