@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { PlusCircleIcon } from '@heroicons/react/24/outline'
 import Invites from '../components/Invites'
 import { useState, useEffect } from 'react'
-import Invites from '../components/Invites'
 
 const Teams = ({ user }) => {
   const [teams, setTeams] = useState([])
