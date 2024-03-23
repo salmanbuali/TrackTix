@@ -37,7 +37,11 @@ function App() {
   }
   return (
     <div className={`${darkMode && 'dark'}`}>
-      <Navbar toggleDarkMode={toggleDarkMode} user={user} handleLogOut={handleLogOut}/>
+      <Navbar
+        toggleDarkMode={toggleDarkMode}
+        user={user}
+        handleLogOut={handleLogOut}
+      />
       <main className="dark:bg-gray-900 bg-neutral-100 h-screen pt-4">
         <Routes>
           <Route path="/register" element={<Register />}></Route>

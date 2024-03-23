@@ -1,10 +1,10 @@
-const Members = ( { members } ) => {
+const Members = ({ members }) => {
   return (
     <ul
       role="list"
       className="divide-y dark:divide-gray-700 divide-gray-300 w-1/2 m-auto"
     >
-      {/* {members.map((member) => (
+      {members?.map((member) => (
         <li key={member.email} className="flex justify-between gap-x-6 py-5">
           <div className="flex min-w-0 gap-x-4">
             <img
@@ -27,7 +27,7 @@ const Members = ( { members } ) => {
             </p>
           </div>
         </li>
-      ))} */}
+      ))}
     </ul>
   )
 }
