@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import Client from '../services/api'
@@ -80,12 +81,13 @@ const Tickets = ({ teamId }) => {
             >
               {ticket.priority}
             </p>
-            <a
-              href={ticket.href}
+
+            <Link
+              to={`/tickets/${ticket._id}`}
               className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-90shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block dark:text-gray-200 dark:bg-gray-400/10"
             >
               View ticket<span className="sr-only">, {ticket.name}</span>
-            </a>
+            </Link>
             <Menu as="div" className="relative flex-none">
               <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
                 <span className="sr-only">Open options</span>
