@@ -28,7 +28,7 @@ const Invites = ({ user }) => {
     <div>
       <h1>Invites</h1>
       {invites?.map((invite) => (
-        <div>
+        <div key={invite._id}>
           <h2>
             from {invite.sender.name} to join {invite.team.name}
           </h2>
