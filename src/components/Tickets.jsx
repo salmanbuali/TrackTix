@@ -7,17 +7,28 @@ function classNames(...classes) {
 }
 
 const Tickets = () => {
+  // don't delete
   const statuses = {
     Complete: 'text-green-900 bg-green-200 ring-green-600/20',
     Processing: 'text-indigo-900 bg-indigo-200 ring-indigo-400/30',
     Pending: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20'
   }
+  // don't delete
+  const prios = {
+    Low: 'text-black bg-yellow-300 ring-yellow-600/20',
+    Mid: 'text-indigo-900 bg-indigo-200 ring-indigo-400/30',
+    High: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
+    Urgent: ''
+  }
+
+  // delete tickets after getting real tickets
   const tickets = [
     {
       id: 1,
       name: 'GraphQL API',
       href: '#',
       status: 'Complete',
+      prio: 'Low',
       createdBy: 'Leslie Alexander',
       solvedBy: 'Leslie Alexander',
       due: 'March 17, 2023'
@@ -27,6 +38,7 @@ const Tickets = () => {
       name: 'New benefits plan',
       href: '#',
       status: 'Processing',
+      prio: 'Mid',
       createdBy: 'Leslie Alexander',
       due: 'May 5, 2023'
     },
@@ -35,6 +47,7 @@ const Tickets = () => {
       name: 'Testing',
       href: '#',
       status: 'Pending',
+      prio: 'High',
       createdBy: 'Courtney Henry',
       due: 'May 25, 2023'
     }
@@ -80,6 +93,14 @@ const Tickets = () => {
             </div>
           </div>
           <div className="flex flex-none items-center gap-x-4">
+            <p
+              className={classNames(
+                prios[ticket.prio],
+                'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset'
+              )}
+            >
+              {ticket.prio}
+            </p>
             <a
               href={ticket.href}
               className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block"
