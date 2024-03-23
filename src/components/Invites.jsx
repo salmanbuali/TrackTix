@@ -3,23 +3,25 @@ import Client from '../services/api'
 
 const Invites = ({ user }) => {
   const [invites, setInvites] = useState([])
+  const [clicked, setClicked] = useState(false)
 
   useEffect(() => {
     const getInvites = async () => {
-      console.log(user?.id)
       const response = await Client.get(`/invites/user/${user?.id}`)
       setInvites(response.data)
-      console.log(response)
     }
     getInvites()
-  }, [])
+    setClicked(false)
+  }, [clicked])
 
   const accept = async (id) => {
     await Client.put(`/invites/${id}`, { status: true })
+    setClicked(true)
   }
 
   const decline = async (id) => {
     await Client.put(`/invites/${id}`, { status: false })
+    setClicked(true)
   }
 
   return invites ? (

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import InviteMember from '../components/InviteMember'
 import Members from '../components/Members'
+import Tickets from '../components/Tickets'
 
 const ViewTeam = ({ user }) => {
   let { id } = useParams()
@@ -70,7 +71,7 @@ const ViewTeam = ({ user }) => {
       </div>
 
       {viewMembers && <Members members={team?.members} />}
-      {!viewMembers && <div>tickets</div>}
+      {!viewMembers && <Tickets />}
     </div>
   )
 }

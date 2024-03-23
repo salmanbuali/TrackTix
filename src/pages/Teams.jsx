@@ -16,7 +16,6 @@ const Teams = ({ user }) => {
 
   return teams ? (
     <div className="w-3/4 m-auto">
-      <Invites user={user} />
       <div className="flex justify-between items-center">
         <h2 className="text-sm font-medium text-gray-500 dark:text-white">
           Teams
