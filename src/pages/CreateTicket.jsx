@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRef } from 'react'
 import Client from '../services/api'
-const CreateTicket = () => {
+const CreateTicket = ({ user }) => {
   let navigate = useNavigate()
   let { id } = useParams()
   const formRef = {
@@ -18,9 +18,11 @@ const CreateTicket = () => {
       content: formRef.content.current.value,
       priority: formRef.priority.current.value,
       attachments: formRef.attachments.current.value,
-      due: formRef.due.current.value
+      due: formRef.due.current.value,
+      createdBy: user?.id
     }
     await Client.post(`/tickets/team/${id}`, ticket)
+    navigate(`/teams/${id}`)
   }
   return (
     <div>
