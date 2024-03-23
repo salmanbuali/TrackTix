@@ -1,6 +1,7 @@
 import Client from '../services/api'
 import { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import InviteMember from '../components/InviteMember'
 import Members from '../components/Members'
 import Tickets from '../components/Tickets'
@@ -35,6 +36,15 @@ const ViewTeam = ({ user }) => {
 
   return (
     <div className="flex justify-center items-center flex-col">
+      <Link to={`/teams/${team._id}/createticket/`}>
+        <button
+          type="button"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Create Ticket
+        </button>
+      </Link>
+      
       <InviteMember
         userId={user?.id}
         teamId={id}

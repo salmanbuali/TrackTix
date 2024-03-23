@@ -31,7 +31,7 @@ const Invites = ({ user }) => {
         Invites
       </p>
       {invites?.map((invite) => (
-        <div className="flex flex-row justify-between items-center mt-2">
+        <div key={invite._id} className="flex flex-row justify-between items-center mt-2">
           <h2>
             <strong>{invite.sender.name}</strong> has invited you to join{' '}
             <strong>{invite.team.name}</strong>

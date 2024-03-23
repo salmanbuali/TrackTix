@@ -8,6 +8,8 @@ import Navbar from './components/Navbar'
 import CreateTeam from './pages/CreateTeam'
 import ViewTeam from './pages/ViewTeam'
 import Invites from './components/Invites'
+import CreateTicket from './pages/CreateTicket'
+
 
 function App() {
   const [user, setUser] = useState(null)
@@ -53,6 +55,10 @@ function App() {
           <Route path="/login" element={<Login setUser={setUser} />}></Route>
           <Route path="/teams" element={<Teams user={user} />}></Route>
           <Route path="/teams/:id" element={<ViewTeam user={user} />}></Route>
+          <Route
+            path="/teams/:id/createticket/"
+            element={<CreateTicket user={user} />}
+          ></Route>
         </Routes>
       </main>
     </div>
