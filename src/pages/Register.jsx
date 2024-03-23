@@ -5,6 +5,8 @@ import {
   DevicePhoneMobileIcon
 } from '@heroicons/react/20/solid'
 import { Link } from 'react-router-dom'
+import { RegisterUser } from '../services/Auth'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
   let invalid = false
