@@ -1,20 +1,20 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/20/solid'
-import { LogInUser } from '../services/Auth'
-import { useRef } from 'react'
+import { Link, useNavigate } from "react-router-dom"
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/20/solid"
+import { LogInUser } from "../services/Auth"
+import { useRef } from "react"
 const Login = ({ setUser }) => {
   let navigate = useNavigate()
   let invalid = false
   const formRef = {
     email: useRef(null),
-    password: useRef(null)
+    password: useRef(null),
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     const payload = await LogInUser({
       email: formRef.email.current.value,
-      password: formRef.password.current.value
+      password: formRef.password.current.value,
     })
     setUser(payload)
     if (payload) {
@@ -44,11 +44,11 @@ const Login = ({ setUser }) => {
               id="email"
               className={`block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white ${
                 invalid
-                  ? 'text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-red-500'
-                  : ''
+                  ? "text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-red-500"
+                  : ""
               }`}
               placeholder={` ${
-                invalid ? 'Not a valid email address' : 'you@example.com'
+                invalid ? "Not a valid email address" : "you@example.com"
               }`}
               ref={formRef.email}
             />

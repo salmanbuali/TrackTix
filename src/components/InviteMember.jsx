@@ -9,11 +9,7 @@ const InviteMember = ({ userId, teamId, members }) => {
       const invite = {
         sender: userId,
         member: email.current.value,
-<<<<<<< HEAD
         team: teamId,
-=======
-        team: teamId
->>>>>>> df51c89a1b9b27d5d97eccf146aed4250e4f7a14
       }
       console.log(invite)
       const res = await Client.post("/invites", invite)
