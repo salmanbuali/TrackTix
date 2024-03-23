@@ -4,13 +4,16 @@ const InviteMember = ({ userId, teamId, members }) => {
   const email = useRef("")
 
   const invite = async () => {
-    const teamMembers = members.map((member) => member.email)
-    console.log(email.current.value)
+    const teamMembers = members?.map((member) => member.email)
     if (!teamMembers.includes(email.current.value)) {
       const invite = {
         sender: userId,
         member: email.current.value,
+<<<<<<< HEAD
         team: teamId,
+=======
+        team: teamId
+>>>>>>> df51c89a1b9b27d5d97eccf146aed4250e4f7a14
       }
       console.log(invite)
       const res = await Client.post("/invites", invite)
