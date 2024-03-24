@@ -7,10 +7,11 @@ import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import CreateTeam from './pages/CreateTeam'
 import ViewTeam from './pages/ViewTeam'
-import Invites from './components/Invites'
 import CreateTicket from './pages/CreateTicket'
 import ViewTicket from './pages/ViewTicket'
 import EditTicket from './pages/EditTicket'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -48,7 +49,9 @@ function App() {
       />
       <main className="dark:bg-gray-900 bg-neutral-100 h-full pt-4">
         <Routes>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/profile/:id" element={<Profile />}></Route>
           <Route
             path="/createteam"
             element={<CreateTeam user={user} />}
