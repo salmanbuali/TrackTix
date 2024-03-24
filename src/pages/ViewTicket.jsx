@@ -10,7 +10,6 @@ const ViewTicket = ({ user }) => {
   useEffect(() => {
     const getTicket = async () => {
       const response = await Client.get(`/tickets/${id}`)
-      console.log(response.data)
       setTicket(response.data)
     }
     getTicket()
