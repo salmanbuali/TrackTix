@@ -36,7 +36,6 @@ const Tickets = ({ teamId, user }) => {
       const response = await Client.get(`/tickets/team/${teamId}`)
       setUnsortedTickets(response.data)
       setTickets(response.data)
-      console.log(response.data)
     }
     getTickets()
   }, [update])
