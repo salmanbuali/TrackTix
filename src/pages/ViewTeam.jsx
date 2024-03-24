@@ -8,7 +8,8 @@ import Tickets from '../components/Tickets'
 import {
   UserPlusIcon,
   UserGroupIcon,
-  CodeBracketSquareIcon
+  CodeBracketSquareIcon,
+  PlusIcon
 } from '@heroicons/react/24/solid'
 
 const ViewTeam = ({ user }) => {
@@ -40,14 +41,6 @@ const ViewTeam = ({ user }) => {
   return (
     <div className="flex justify-center items-center flex-col">
       <h1 className="text-gray-900 dark:text-white"> {team.name}</h1>
-      <Link to={`/teams/${team._id}/createticket/`}>
-        <button
-          type="button"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          Create Ticket
-        </button>
-      </Link>
 
       <InviteMember
         userId={user?.id}
@@ -93,6 +86,16 @@ const ViewTeam = ({ user }) => {
           <CodeBracketSquareIcon className="w-6 h-6" />
           Tickets
         </button>
+
+        <Link to={`/teams/${team._id}/createticket/`}>
+          <button
+            type="button"
+            className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+          >
+            <PlusIcon className="w-5 h-5" />
+            Create Ticket
+          </button>
+        </Link>
       </div>
 
       {viewMembers && <Members members={team?.members} teamId={id} />}

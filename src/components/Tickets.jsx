@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import Client from '../services/api'
+import moment from 'moment'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -62,7 +63,10 @@ const Tickets = ({ teamId, user }) => {
             </div>
             <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500 dark:text-gray-300">
               <p className="whitespace-nowrap">
-                Due on <time dateTime={ticket.due}>{ticket.due}</time>
+                Due on{' '}
+                <time dateTime={ticket.due}>
+                  {moment(ticket.due).format('Do MMM  YY')}
+                </time>
               </p>
               <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
                 <circle cx={1} cy={1} r={1} />
