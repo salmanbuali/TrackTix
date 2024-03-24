@@ -8,7 +8,7 @@ function classNames(...classes) {
 }
 
 const ViewTicket = ({ user }) => {
-  let { id } = useParams()
+  let { id, teamId } = useParams()
   const [ticket, setTicket] = useState()
   const [update, setUpdate] = useState(false)
   let content = useRef(null)
@@ -31,7 +31,6 @@ const ViewTicket = ({ user }) => {
     const getTicket = async () => {
       const response = await Client.get(`/tickets/${id}`)
       setTicket(response.data)
-      console.log(response.data)
     }
     getTicket()
   }, [update])
@@ -45,6 +44,15 @@ const ViewTicket = ({ user }) => {
     await Client.post(`/tickets/${id}/comments`, comment)
     setUpdate(true)
     comment.current.value = ''
+  }
+
+  const solved = async () => {
+    const ticket = {
+      status: 'Complete',
+      solvedBy: user.id
+    }
+    await Client.put(`/tickets/${id}?teamId=${teamId}`, ticket)
+    setUpdate(true)
   }
 
   return (
@@ -127,7 +135,12 @@ const ViewTicket = ({ user }) => {
                   </dd>
                 </div>
               </dl>
-              <button className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1">Solved</button>
+              <button
+                onClick={solved}
+                className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+              >
+                Solved
+              </button>
             </div>
 
             <div className="lg:col-start-3">

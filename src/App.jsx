@@ -62,7 +62,7 @@ function App() {
           <Route path="/teams" element={<Teams user={user} />}></Route>
           <Route path="/teams/:id" element={<ViewTeam user={user} />}></Route>
           <Route
-            path="/tickets/:id"
+            path="/tickets/:id/team/:teamId"
             element={<ViewTicket user={user} />}
           ></Route>
           <Route
