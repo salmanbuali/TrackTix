@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, useRef } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MoonIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
@@ -11,6 +11,9 @@ function classNames(...classes) {
 
 const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
   const [notifications, setNotifications] = useState([])
+  const [open, setOpen] = useState(false)
+  const cancelButtonRef = useRef(null)
+
   let navigate = useNavigate()
   useEffect(() => {
     const getNotifications = async () => {
@@ -24,10 +27,10 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
   }
   return (
     <Disclosure as="nav" className="bg-gray-800 fixed w-full z-50 ">
-      {/* <Notifications notifications={notifications} /> */}
 
-      {({ open }) => (
+      {({ o }) => (
         <>
+          {notifications.length && <Notifications notifications={notifications} open={open} setOpen={setOpen} cancelButtonRef={cancelButtonRef}/>}
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
@@ -58,6 +61,7 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                   <button
                     type="button"
                     className="relative rounded-full bg-gray-800 p-1 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    onClick={() => setOpen(true)}
                   >
                     <span className="absolute -inset-1.5" />
                     <BellIcon className="h-6 w-6" aria-hidden="true" />
