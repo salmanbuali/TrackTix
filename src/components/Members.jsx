@@ -10,7 +10,7 @@ const Members = ({ members, teamId }) => {
   return (
     <ul
       role="list"
-      className="divide-y dark:divide-gray-700 divide-gray-300 w-1/2 m-auto"
+      className="divide-y dark:divide-gray-700 divide-gray-300 w-full m-auto"
     >
       {members?.map((member) => (
         <li key={member.email} className="flex justify-between gap-x-6 py-5">

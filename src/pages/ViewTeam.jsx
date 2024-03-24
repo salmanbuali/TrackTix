@@ -39,8 +39,11 @@ const ViewTeam = ({ user }) => {
   }
 
   return (
-    <div className="flex justify-center items-center flex-col">
-      <h1 className="text-gray-900 dark:text-white"> {team.name}</h1>
+    <div className="flex flex-col w-2/3 m-auto">
+      <h1 className="text-gray-900 dark:text-white font-bold text-lg">
+        {' '}
+        {team.name}
+      </h1>
 
       <InviteMember
         userId={user?.id}
@@ -52,7 +55,7 @@ const ViewTeam = ({ user }) => {
       />
 
       <div
-        className="inline-flex rounded-md justify-between w-2/3"
+        className="inline-flex rounded-md justify-between w-2/3 m-auto"
         role="group"
       >
         {manager && (
