@@ -42,7 +42,7 @@ const Tickets = ({ teamId, user }) => {
   }
 
   const edit = (ticketId) => {
-    navigate(`/tickets/${ticketId}/edit`)
+    navigate(`/teams/${teamId}/edit/${ticketId}`)
   }
 
   return tickets ? (

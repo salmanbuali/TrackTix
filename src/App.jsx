@@ -61,7 +61,7 @@ function App() {
             element={<ViewTicket user={user} />}
           ></Route>
           <Route
-            path="/tickets/:id/edit"
+            path="/teams/:teamId/edit/:ticketId"
             element={<EditTicket user={user} />}
           ></Route>
           <Route
