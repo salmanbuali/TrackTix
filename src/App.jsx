@@ -46,7 +46,7 @@ function App() {
         user={user}
         handleLogOut={handleLogOut}
       />
-      <main className="dark:bg-gray-900 bg-neutral-100 h-full pt-4">
+      <main className="dark:bg-gray-900 bg-neutral-100 min-h-screen pt-24">
         <Routes>
           <Route path="/register" element={<Register />}></Route>
           <Route
