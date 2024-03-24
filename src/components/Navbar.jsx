@@ -1,15 +1,27 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MoonIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
+import Client from '../services/api'
+import Notifications from './Notifications'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
+  const [notifications, setNotifications] = useState([])
+  useEffect(() => {
+    const getNotifications = async () => {
+      const response = await Client.get(`/notifications/user/${user?.id}`)
+      console.log(response.data)
+      setNotifications(response.data)
+    }
+    getNotifications()
+  }, [])
   return (
     <Disclosure as="nav" className="bg-gray-800">
+      {/* <Notifications notifications={notifications} /> */}
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
