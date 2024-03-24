@@ -1,7 +1,6 @@
 import Client from '../services/api'
 import { Link } from 'react-router-dom'
 import { PlusCircleIcon, InboxArrowDownIcon } from '@heroicons/react/24/outline'
-import Invites from '../components/Invites'
 import { useState, useEffect, useRef } from 'react'
 import InvitesDialog from '../components/InvitesDialog'
 
@@ -21,7 +20,6 @@ const Teams = ({ user }) => {
   return teams.length ? (
     <div className="w-3/4 m-auto">
       <InvitesDialog open={open} setOpen={setOpen} cancelButtonRef={cancelButtonRef} user={user}/>
-      {/* <Invites user={user} /> */}
       <div className="flex justify-between items-center mt-8">
         <h2 className="text-sm font-medium text-gray-500 dark:text-white">
           Teams
