@@ -39,7 +39,7 @@ const ViewTeam = ({ user }) => {
 
   return (
     <div className="flex justify-center items-center flex-col">
-      <h1>{team.name}</h1>
+      <h1 className="text-gray-900 dark:text-white"> {team.name}</h1>
       <Link to={`/teams/${team._id}/createticket/`}>
         <button
           type="button"
@@ -95,7 +95,7 @@ const ViewTeam = ({ user }) => {
         </button>
       </div>
 
-      {viewMembers && <Members members={team?.members} />}
+      {viewMembers && <Members members={team?.members} teamId={id} />}
       {!viewMembers && <Tickets teamId={id} />}
     </div>
   )

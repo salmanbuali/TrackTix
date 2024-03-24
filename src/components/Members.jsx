@@ -1,4 +1,4 @@
-const Members = ({ members }) => {
+const Members = ({ members, teamId }) => {
   return (
     <ul
       role="list"
@@ -23,7 +23,7 @@ const Members = ({ members }) => {
           </div>
           <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
             <p className="text-sm leading-6 dark:text-white text-gray-900">
-              {member.role}
+              {member.roles.map((role) => role.team === teamId && role.name)}
             </p>
           </div>
         </li>
