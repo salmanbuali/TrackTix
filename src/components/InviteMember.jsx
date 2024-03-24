@@ -1,6 +1,6 @@
-import { Fragment, useState, useEffect, useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
+import { EnvelopeIcon } from '@heroicons/react/24/outline'
 
 import Client from '../services/api'
 const InviteMember = ({
@@ -25,7 +25,7 @@ const InviteMember = ({
       email.current.value = ''
       setOpen(false)
     } else {
-      console.log('already a member')
+      setOpen(false)
     }
   }
 

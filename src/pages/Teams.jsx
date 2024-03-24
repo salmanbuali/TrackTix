@@ -1,11 +1,14 @@
 import Client from '../services/api'
 import { Link } from 'react-router-dom'
-import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import Invites from '../components/Invites'
-import { useState, useEffect } from 'react'
+import { PlusCircleIcon, InboxArrowDownIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect, useRef } from 'react'
+import InvitesDialog from '../components/InvitesDialog'
 
 const Teams = ({ user }) => {
   const [teams, setTeams] = useState([])
+  const [open, setOpen] = useState(false)
+  const cancelButtonRef = useRef(null)
+
   useEffect(() => {
     const getTeams = async () => {
       const response = await Client.get(`/users/${user?.id}/teams`)
@@ -16,20 +19,30 @@ const Teams = ({ user }) => {
 
   return teams.length ? (
     <div className="w-3/4 m-auto">
-      <Invites user={user} />
+      <InvitesDialog open={open} setOpen={setOpen} cancelButtonRef={cancelButtonRef} user={user}/>
       <div className="flex justify-between items-center mt-8">
         <h2 className="text-sm font-medium text-gray-500 dark:text-white">
           Teams
         </h2>
-        <Link to="/createteam">
+        <div className="flex gap-1">
           <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 mt-3 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 flex items-center"
+            type="button"
+            className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+            onClick={()=>{setOpen(true)}}
           >
-            <PlusCircleIcon className="w-6 h-6 mr-2" />
-            Team
+            <InboxArrowDownIcon className="w-6 h-6 mr-2" />
+            Invites
           </button>
-        </Link>
+          <Link to="/createteam">
+            <button
+              type="submit"
+              className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+            >
+              <PlusCircleIcon className="w-6 h-6 mr-2" />
+              Team
+            </button>
+          </Link>
+        </div>
       </div>
 
       <ul
