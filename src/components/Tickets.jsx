@@ -8,8 +8,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Tickets = ({ teamId, user, setUpdate }) => {
+const Tickets = ({ teamId, user }) => {
   const [tickets, setTickets] = useState([])
+  const [update, setUpdate] = useState(false)
   // don't delete
   const statuses = {
     Complete: 'text-green-900 dark:text-black bg-green-200 ring-green-600/20',
@@ -31,7 +32,7 @@ const Tickets = ({ teamId, user, setUpdate }) => {
       setTickets(response.data)
     }
     getTickets()
-  }, [])
+  }, [update])
 
   const assign = async (ticketId) => {
     await Client.put(`/tickets/${ticketId}/assign`, { member: user.id })
