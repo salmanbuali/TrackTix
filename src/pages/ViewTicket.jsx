@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import Client from '../services/api'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 
 function classNames(...classes) {
@@ -9,6 +9,7 @@ function classNames(...classes) {
 
 const ViewTicket = ({ user }) => {
   let { id, teamId } = useParams()
+  let navigate = useNavigate()
   const [ticket, setTicket] = useState()
   const [update, setUpdate] = useState(false)
   let content = useRef(null)
@@ -53,6 +54,15 @@ const ViewTicket = ({ user }) => {
     }
     await Client.put(`/tickets/${id}?teamId=${teamId}`, ticket)
     setUpdate(true)
+  }
+
+  const leave = async () => {
+    await Client.put(`/tickets/${id}/remove`, { member: user.id })
+    setUpdate(true)
+  }
+
+  const back = () => {
+    navigate(`/teams/${teamId}`)
   }
 
   return (
@@ -135,12 +145,29 @@ const ViewTicket = ({ user }) => {
                   </dd>
                 </div>
               </dl>
+              {ticket.status !== 'Complete' &&
+                ticket.member.map((member) => member._id).includes(user.id) && (
+                  <button
+                    onClick={solved}
+                    className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                  >
+                    Solved
+                  </button>
+                )}
               <button
-                onClick={solved}
+                onClick={back}
                 className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
               >
-                Solved
+                Back
               </button>
+              {ticket.member.map((member) => member._id).includes(user.id) && (
+                <button
+                  onClick={leave}
+                  className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                >
+                  Leave
+                </button>
+              )}
             </div>
 
             <div className="lg:col-start-3">
