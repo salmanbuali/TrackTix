@@ -155,7 +155,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
               </p>
 
               <Link
-                to={`/tickets/${ticket._id}`}
+                to={`/tickets/${ticket._id}/team/${teamId}`}
                 className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-90shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block dark:text-gray-200 dark:bg-gray-400/10"
               >
                 View ticket<span className="sr-only">, {ticket.name}</span>

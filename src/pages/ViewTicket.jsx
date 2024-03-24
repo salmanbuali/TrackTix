@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import Client from '../services/api'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 
 function classNames(...classes) {
@@ -8,7 +8,8 @@ function classNames(...classes) {
 }
 
 const ViewTicket = ({ user }) => {
-  let { id } = useParams()
+  let { id, teamId } = useParams()
+  let navigate = useNavigate()
   const [ticket, setTicket] = useState()
   const [update, setUpdate] = useState(false)
   let content = useRef(null)
@@ -31,7 +32,6 @@ const ViewTicket = ({ user }) => {
     const getTicket = async () => {
       const response = await Client.get(`/tickets/${id}`)
       setTicket(response.data)
-      console.log(response.data)
     }
     getTicket()
   }, [update])
@@ -45,6 +45,24 @@ const ViewTicket = ({ user }) => {
     await Client.post(`/tickets/${id}/comments`, comment)
     setUpdate(true)
     comment.current.value = ''
+  }
+
+  const solved = async () => {
+    const ticket = {
+      status: 'Complete',
+      solvedBy: user.id
+    }
+    await Client.put(`/tickets/${id}?teamId=${teamId}`, ticket)
+    setUpdate(true)
+  }
+
+  const leave = async () => {
+    await Client.put(`/tickets/${id}/remove`, { member: user.id })
+    setUpdate(true)
+  }
+
+  const back = () => {
+    navigate(`/teams/${teamId}`)
   }
 
   return (
@@ -127,7 +145,29 @@ const ViewTicket = ({ user }) => {
                   </dd>
                 </div>
               </dl>
-              <button className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1">Solved</button>
+              {ticket.status !== 'Complete' &&
+                ticket.member.map((member) => member._id).includes(user.id) && (
+                  <button
+                    onClick={solved}
+                    className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                  >
+                    Solved
+                  </button>
+                )}
+              <button
+                onClick={back}
+                className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+              >
+                Back
+              </button>
+              {ticket.member.map((member) => member._id).includes(user.id) && (
+                <button
+                  onClick={leave}
+                  className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                >
+                  Leave
+                </button>
+              )}
             </div>
 
             <div className="lg:col-start-3">
@@ -163,34 +203,37 @@ const ViewTicket = ({ user }) => {
               </ul>
 
               {/* New comment form */}
-              <div className="mt-6 flex gap-x-3">
-                <form className="relative flex-auto">
-                  <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
-                    <label htmlFor="comment" className="sr-only">
-                      Add your comment
-                    </label>
-                    <textarea
-                      rows={2}
-                      name="comment"
-                      id="comment"
-                      className="block w-full resize-none border-0 bg-transparent py-1 px-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="Add your comment..."
-                      defaultValue={''}
-                      ref={content}
-                    />
-                  </div>
+              {ticket.status !== 'Complete' &&
+                ticket.member.map((member) => member._id).includes(user.id) && (
+                  <div className="mt-6 flex gap-x-3">
+                    <form className="relative flex-auto">
+                      <div className="overflow-hidden rounded-lg pb-12 shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600">
+                        <label htmlFor="comment" className="sr-only">
+                          Add your comment
+                        </label>
+                        <textarea
+                          rows={2}
+                          name="comment"
+                          id="comment"
+                          className="block w-full resize-none border-0 bg-transparent py-1 px-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                          placeholder="Add your comment..."
+                          defaultValue={''}
+                          ref={content}
+                        />
+                      </div>
 
-                  <div className="absolute inset-x-0 bottom-0 flex py-2 pl-3 pr-2">
-                    <button
-                      type="submit"
-                      className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                      onClick={addComment}
-                    >
-                      Comment
-                    </button>
+                      <div className="absolute inset-x-0 bottom-0 flex py-2 pl-3 pr-2">
+                        <button
+                          type="submit"
+                          className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          onClick={addComment}
+                        >
+                          Comment
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                </form>
-              </div>
+                )}
             </div>
           </div>
         </div>
