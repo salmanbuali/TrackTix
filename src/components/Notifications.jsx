@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { BellAlertIcon } from '@heroicons/react/24/outline'
+import { XMarkIcon } from '@heroicons/react/20/solid'
 
 const Notifications = ({ open, setOpen, cancelButtonRef, notifications }) => {
   return (
@@ -50,7 +51,19 @@ const Notifications = ({ open, setOpen, cancelButtonRef, notifications }) => {
                       <div className="mt-5">
                         <ul>
                           {notifications?.map((noti, i) => (
-                            <li key={i}>{noti.content}</li>
+                            <li key={i}>
+                              {noti.content}{' '}
+                              <button
+                                type="button"
+                                className="rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                              >
+                                {' '}
+                                <XMarkIcon
+                                  className="h-4 w-4"
+                                  aria-hidden="true"
+                                />{' '}
+                              </button>
+                            </li>
                           ))}
                         </ul>
                       </div>
