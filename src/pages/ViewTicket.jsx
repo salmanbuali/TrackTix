@@ -11,6 +11,7 @@ const ViewTicket = ({ user }) => {
     const getTicket = async () => {
       const response = await Client.get(`/tickets/${id}`)
       setTicket(response.data)
+      console.log(response.data)
     }
     getTicket()
   }, [update])
@@ -26,7 +27,14 @@ const ViewTicket = ({ user }) => {
     comment.body.current.value = ''
   }
 
-  return <div>Ticket</div>
+  return (
+    ticket && (
+      <div className="flex flex-col justify-center">
+        Ticket
+        <h1>HELLO WORLD</h1>
+      </div>
+    )
+  )
 }
 
 export default ViewTicket

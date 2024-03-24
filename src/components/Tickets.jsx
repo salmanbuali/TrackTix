@@ -87,7 +87,7 @@ const Tickets = ({ teamId, user }) => {
   }
 
   return tickets ? (
-    <div className="w-full m-auto">
+    <div className="w-full mt-5 m-auto">
       <div className="max-w-sm mx-auto">
         <select
           onChange={sort}
@@ -104,7 +104,7 @@ const Tickets = ({ teamId, user }) => {
           <option value="d">Due Date</option>
         </select>
       </div>
-      <ul role="list" className="divide-y divide-gray-300 w-2/3 m-auto">
+      <ul role="list" className="divide-y divide-gray-300 m-auto">
         {tickets?.map((ticket) => (
           <li
             key={ticket._id}
