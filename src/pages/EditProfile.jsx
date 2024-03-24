@@ -1,6 +1,10 @@
-import { useRef, useState } from 'react'
-const EditProfile = ({ id }) => {
+import { useRef, useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import Client from '../services/api'
+const EditProfile = () => {
   const [user, setUser] = useState({})
+  const { id } = useParams()
+  let navigate = useNavigate()
   const formRef = {
     name: useRef(null),
     email: useRef(null),
@@ -28,6 +32,7 @@ const EditProfile = ({ id }) => {
       avatar: formRef.avatar.current.value
     }
     await Client.put(`/users/${id}`, user)
+    navigate(`/profile/${id}`)
   }
   return (
     <div>

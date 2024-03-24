@@ -12,8 +12,14 @@ const Members = ({ members, teamId }) => {
   useEffect(() => {
     return
   }, [update])
+
   const removeRoles = async (id) => {
     await Client.put(`/teams/${teamId}/removeroles`, { member: id })
+    setUpdate(true)
+  }
+
+  const removeMember = async (id) => {
+    await Client.put(`/teams/${teamId}/removemember/${id}`)
     setUpdate(true)
   }
   return (
@@ -85,6 +91,21 @@ const Members = ({ members, teamId }) => {
                       )}
                     >
                       Remove roles
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      onClick={() => {
+                        removeMember(member._id)
+                      }}
+                      className={classNames(
+                        active ? 'bg-gray-50' : '',
+                        'block px-3 py-1 text-sm leading-6 text-gray-900'
+                      )}
+                    >
+                      Remove Member
                     </a>
                   )}
                 </Menu.Item>
