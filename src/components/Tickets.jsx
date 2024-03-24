@@ -30,8 +30,9 @@ const Tickets = ({ teamId, user }) => {
 
   useEffect(() => {
     const getTickets = async () => {
-      const response = await Client.get(`tickets/team/${teamId}`)
+      const response = await Client.get(`/tickets/team/${teamId}`)
       setTickets(response.data)
+      console.log(response.data)
     }
     getTickets()
   }, [update])
