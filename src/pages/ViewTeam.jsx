@@ -17,15 +17,18 @@ const ViewTeam = ({ user }) => {
   const [viewMembers, setViewMembers] = useState(false)
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
+  const [manager, setManager] = useState(false)
 
   useEffect(() => {
     const getTeam = async () => {
       const response = await Client.get(`/teams/${id}`)
       setTeam(response.data)
+      if (response.data.manager._id === user?.id) {
+        setManager(true)
+      }
     }
     getTeam()
   }, [])
-
   const toggleView = (view) => {
     if (view === 'm') {
       setViewMembers(true)
@@ -36,15 +39,16 @@ const ViewTeam = ({ user }) => {
 
   return (
     <div className="flex justify-center items-center flex-col">
+      <h1 className="text-gray-900 dark:text-white"> {team.name}</h1>
       <Link to={`/teams/${team._id}/createticket/`}>
         <button
           type="button"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Create Ticket
         </button>
       </Link>
-      
+
       <InviteMember
         userId={user?.id}
         teamId={id}
@@ -53,6 +57,7 @@ const ViewTeam = ({ user }) => {
         setOpen={setOpen}
         cancelButtonRef={cancelButtonRef}
       />
+
       <div
         className="inline-flex rounded-md justify-between w-2/3"
         role="group"
@@ -90,8 +95,8 @@ const ViewTeam = ({ user }) => {
         </button>
       </div>
 
-      {viewMembers && <Members members={team?.members} />}
-      {!viewMembers && <Tickets />}
+      {viewMembers && <Members members={team?.members} teamId={id} />}
+      {!viewMembers && <Tickets teamId={id} user={user} />}
     </div>
   )
 }

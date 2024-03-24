@@ -1,12 +1,16 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
+import Client from '../services/api'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Tickets = () => {
+const Tickets = ({ teamId, user }) => {
+  const [tickets, setTickets] = useState([])
+  const [update, setUpdate] = useState(false)
   // don't delete
   const statuses = {
     Complete: 'text-green-900 dark:text-black bg-green-200 ring-green-600/20',
@@ -22,58 +26,30 @@ const Tickets = () => {
     Urgent: 'text-white dark:text-black bg-red-600 ring-yellow-600/20'
   }
 
-  // delete tickets after getting real tickets
-  const tickets = [
-    {
-      id: 1,
-      name: 'GraphQL API',
-      href: '#',
-      status: 'Complete',
-      prio: 'Urgent',
-      createdBy: 'Leslie Alexander',
-      solvedBy: 'Leslie Alexander',
-      due: 'March 17, 2023'
-    },
-    {
-      id: 2,
-      name: 'New benefits plan',
-      href: '#',
-      status: 'Processing',
-      prio: 'Mid',
-      createdBy: 'Leslie Alexander',
-      due: 'May 5, 2023'
-    },
-    {
-      id: 3,
-      name: 'Testing',
-      href: '#',
-      status: 'Pending',
-      prio: 'High',
-      createdBy: 'Courtney Henry',
-      due: 'May 25, 2023'
-    },
-    {
-      id: 4,
-      name: 'Analysis',
-      href: '#',
-      status: 'Pending',
-      prio: 'Low',
-      createdBy: 'Courtney Henry',
-      due: 'May 25, 2023'
+  useEffect(() => {
+    const getTickets = async () => {
+      const response = await Client.get(`tickets/team/${teamId}`)
+      setTickets(response.data)
     }
-  ]
+    getTickets()
+  }, [update])
 
-  return (
+  const assign = async (ticketId) => {
+    await Client.put(`/tickets/${ticketId}/assign`, { member: user.id })
+    setUpdate(true)
+  }
+
+  return tickets ? (
     <ul role="list" className="divide-y divide-gray-300 w-2/3 m-auto">
-      {tickets.map((ticket) => (
+      {tickets?.map((ticket) => (
         <li
-          key={ticket.id}
+          key={ticket._id}
           className="flex items-center justify-between gap-x-6 py-5"
         >
           <div className="min-w-0">
             <div className="flex items-start gap-x-3">
               <p className="text-sm font-semibold leading-6text-gray-900 dark:text-white">
-                {ticket.name}
+                {ticket.subject}
               </p>
               <p
                 className={classNames(
@@ -91,13 +67,13 @@ const Tickets = () => {
               <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
                 <circle cx={1} cy={1} r={1} />
               </svg>
-              <p className="truncate">Created by {ticket.createdBy}</p>
+              <p className="truncate">Created by {ticket.createdBy.name}</p>
               {ticket.solvedBy && (
                 <>
                   <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
                     <circle cx={1} cy={1} r={1} />
                   </svg>
-                  <p className="truncate">Closed by {ticket.solvedBy}</p>{' '}
+                  <p className="truncate">Closed by {ticket.solvedBy.name}</p>{' '}
                 </>
               )}
             </div>
@@ -105,18 +81,19 @@ const Tickets = () => {
           <div className="flex flex-none items-center gap-x-4">
             <p
               className={classNames(
-                prios[ticket.prio],
+                prios[ticket.priority],
                 'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset'
               )}
             >
-              {ticket.prio}
+              {ticket.priority}
             </p>
-            <a
-              href={ticket.href}
+
+            <Link
+              to={`/tickets/${ticket._id}`}
               className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-90shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block dark:text-gray-200 dark:bg-gray-400/10"
             >
               View ticket<span className="sr-only">, {ticket.name}</span>
-            </a>
+            </Link>
             <Menu as="div" className="relative flex-none">
               <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
                 <span className="sr-only">Open options</span>
@@ -148,7 +125,9 @@ const Tickets = () => {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        href="#"
+                        onClick={() => {
+                          assign(ticket._id)
+                        }}
                         className={classNames(
                           active ? 'bg-gray-50' : '',
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
@@ -165,6 +144,8 @@ const Tickets = () => {
         </li>
       ))}
     </ul>
+  ) : (
+    <></>
   )
 }
 

@@ -9,7 +9,7 @@ import CreateTeam from './pages/CreateTeam'
 import ViewTeam from './pages/ViewTeam'
 import Invites from './components/Invites'
 import CreateTicket from './pages/CreateTicket'
-
+import ViewTicket from './pages/ViewTicket'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -55,6 +55,10 @@ function App() {
           <Route path="/login" element={<Login setUser={setUser} />}></Route>
           <Route path="/teams" element={<Teams user={user} />}></Route>
           <Route path="/teams/:id" element={<ViewTeam user={user} />}></Route>
+          <Route
+            path="/tickets/:id"
+            element={<ViewTicket user={user} />}
+          ></Route>
           <Route
             path="/teams/:id/createticket/"
             element={<CreateTicket user={user} />}
