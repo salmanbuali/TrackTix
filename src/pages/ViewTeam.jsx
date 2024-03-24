@@ -104,7 +104,9 @@ const ViewTeam = ({ user }) => {
       </div>
 
       {viewMembers && <Members members={team?.members} teamId={id} />}
-      {!viewMembers && <Tickets teamId={id} user={user} />}
+      {!viewMembers && (
+        <Tickets teamId={id} user={user} members={team?.members} />
+      )}
     </div>
   )
 }
