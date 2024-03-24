@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import Client from '../services/api'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline'
 
-const Invites = ({ user }) => {
+const Invites = ({ user, setOpen }) => {
   const [invites, setInvites] = useState([])
   const [clicked, setClicked] = useState(false)
 
@@ -18,18 +18,17 @@ const Invites = ({ user }) => {
   const accept = async (id) => {
     await Client.put(`/invites/${id}`, { status: true })
     setClicked(true)
+    setOpen(false)
   }
 
   const decline = async (id) => {
     await Client.put(`/invites/${id}`, { status: false })
     setClicked(true)
+    setOpen(false)
   }
 
-  return invites ? (
+  return invites.length ? (
     <div>
-      <p className="text-sm font-medium text-gray-500 dark:text-white">
-        Invites
-      </p>
       {invites?.map((invite) => (
         <div
           key={invite._id}
@@ -65,7 +64,7 @@ const Invites = ({ user }) => {
       ))}
     </div>
   ) : (
-    <></>
+    <div> No Invites Found</div>
   )
 }
 
