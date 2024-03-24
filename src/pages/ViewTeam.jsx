@@ -18,6 +18,7 @@ const ViewTeam = ({ user }) => {
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
   const [manager, setManager] = useState(false)
+  const [update, setUpdate] = useState(false)
 
   useEffect(() => {
     const getTeam = async () => {
@@ -96,7 +97,9 @@ const ViewTeam = ({ user }) => {
       </div>
 
       {viewMembers && <Members members={team?.members} teamId={id} />}
-      {!viewMembers && <Tickets teamId={id} />}
+      {!viewMembers && (
+        <Tickets teamId={id} user={user} setUpdate={setUpdate} />
+      )}
     </div>
   )
 }

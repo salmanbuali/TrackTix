@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Tickets = ({ teamId }) => {
+const Tickets = ({ teamId, user, setUpdate }) => {
   const [tickets, setTickets] = useState([])
   // don't delete
   const statuses = {
@@ -32,6 +32,11 @@ const Tickets = ({ teamId }) => {
     }
     getTickets()
   }, [])
+
+  const assign = async (ticketId) => {
+    await Client.put(`/tickets/${ticketId}`, { member: user.id })
+    setUpdate(true)
+  }
 
   return tickets ? (
     <ul role="list" className="divide-y divide-gray-300 w-2/3 m-auto">
@@ -119,7 +124,9 @@ const Tickets = ({ teamId }) => {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        href="#"
+                        onClick={() => {
+                          assign(ticket._id)
+                        }}
                         className={classNames(
                           active ? 'bg-gray-50' : '',
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
