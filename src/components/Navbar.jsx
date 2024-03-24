@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MoonIcon, UserGroupIcon } from '@heroicons/react/24/outline'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Client from '../services/api'
 import Notifications from './Notifications'
 
@@ -11,6 +11,7 @@ function classNames(...classes) {
 
 const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
   const [notifications, setNotifications] = useState([])
+  let navigate = useNavigate()
   useEffect(() => {
     const getNotifications = async () => {
       const response = await Client.get(`/notifications/user/${user?.id}`)
@@ -18,6 +19,9 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
     }
     getNotifications()
   }, [])
+  const profile = () => {
+    navigate(`/profile/${user.id}`)
+  }
   return (
     <Disclosure as="nav" className="bg-gray-800 fixed w-full z-50 ">
       {/* <Notifications notifications={notifications} /> */}
@@ -90,7 +94,7 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
+                                onClick={profile}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
                                   'block px-4 py-2 text-sm text-gray-700'

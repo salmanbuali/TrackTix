@@ -1,12 +1,21 @@
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import Client from '../services/api'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Members = ({ members, teamId }) => {
+  const [update, setUpdate] = useState(false)
+  useEffect(() => {
+    return
+  }, [update])
+  const removeRoles = async (id) => {
+    await Client.put(`/teams/${teamId}/removeroles`, { member: id })
+    setUpdate(true)
+  }
   return (
     <ul
       role="list"
@@ -61,6 +70,21 @@ const Members = ({ members, teamId }) => {
                       )}
                     >
                       Add role
+                    </a>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <a
+                      onClick={() => {
+                        removeRoles(member._id)
+                      }}
+                      className={classNames(
+                        active ? 'bg-gray-50' : '',
+                        'block px-3 py-1 text-sm leading-6 text-gray-900'
+                      )}
+                    >
+                      Remove roles
                     </a>
                   )}
                 </Menu.Item>
