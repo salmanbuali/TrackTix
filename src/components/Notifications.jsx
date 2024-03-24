@@ -1,5 +1,5 @@
-const Notification = () => {
+const Notifications = ({ notifications }) => {
   return <></>
 }
 
-export default Notification
+export default Notifications
