@@ -34,7 +34,7 @@ const Tickets = ({ teamId, user, setUpdate }) => {
   }, [])
 
   const assign = async (ticketId) => {
-    await Client.put(`/tickets/${ticketId}`, { member: user.id })
+    await Client.put(`/tickets/${ticketId}/assign`, { member: user.id })
     setUpdate(true)
   }
 
