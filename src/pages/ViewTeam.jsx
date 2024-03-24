@@ -62,16 +62,18 @@ const ViewTeam = ({ user }) => {
         className="inline-flex rounded-md justify-between w-2/3"
         role="group"
       >
-        <button
-          type="button"
-          className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
-          onClick={() => {
-            setOpen(true)
-          }}
-        >
-          <UserPlusIcon className="w-5 h-5" />
-          Invite Member
-        </button>
+        {manager && (
+          <button
+            type="button"
+            className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+            onClick={() => {
+              setOpen(true)
+            }}
+          >
+            <UserPlusIcon className="w-5 h-5" />
+            Invite Member
+          </button>
+        )}
 
         <button
           onClick={() => {

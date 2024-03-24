@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Menu, Transition } from '@headlessui/react'
 import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import Client from '../services/api'
@@ -11,6 +11,7 @@ function classNames(...classes) {
 const Tickets = ({ teamId, user }) => {
   const [tickets, setTickets] = useState([])
   const [update, setUpdate] = useState(false)
+  let navigate = useNavigate()
   // don't delete
   const statuses = {
     Complete: 'text-green-900 dark:text-black bg-green-200 ring-green-600/20',
@@ -37,6 +38,10 @@ const Tickets = ({ teamId, user }) => {
   const assign = async (ticketId) => {
     await Client.put(`/tickets/${ticketId}/assign`, { member: user.id })
     setUpdate(true)
+  }
+
+  const edit = (ticketId) => {
+    navigate(`/tickets/${ticketId}/edit`)
   }
 
   return tickets ? (
@@ -112,13 +117,16 @@ const Tickets = ({ teamId, user }) => {
                   <Menu.Item>
                     {({ active }) => (
                       <a
-                        href="#"
+                        onClick={() => {
+                          edit(ticket._id)
+                        }}
                         className={classNames(
                           active ? 'bg-gray-50' : '',
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
                         )}
                       >
-                        Edit<span className="sr-only">, {ticket.name}</span>
+                        Edit
+                        <span className="sr-only">, {ticket.name}</span>
                       </a>
                     )}
                   </Menu.Item>

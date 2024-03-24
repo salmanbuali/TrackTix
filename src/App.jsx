@@ -10,6 +10,7 @@ import ViewTeam from './pages/ViewTeam'
 import Invites from './components/Invites'
 import CreateTicket from './pages/CreateTicket'
 import ViewTicket from './pages/ViewTicket'
+import EditTicket from './pages/EditTicket'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -58,6 +59,10 @@ function App() {
           <Route
             path="/tickets/:id"
             element={<ViewTicket user={user} />}
+          ></Route>
+          <Route
+            path="/tickets/:id/edit"
+            element={<EditTicket user={user} />}
           ></Route>
           <Route
             path="/teams/:id/createticket/"
