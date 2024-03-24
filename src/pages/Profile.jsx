@@ -5,7 +5,7 @@ import Client from '../services/api'
 const Profile = () => {
   const { id } = useParams()
   const [user, setUser] = useState({})
-  let navigate = useNavigate
+  let navigate = useNavigate()
   useEffect(() => {
     const getUser = async () => {
       const response = await Client.get(`/users/${id}`)
@@ -14,7 +14,7 @@ const Profile = () => {
     getUser()
   }, [])
   const edit = () => {
-    navigate(`/user/${id}/edit`)
+    navigate(`/profile/${id}/edit`)
   }
   return (
     <div>

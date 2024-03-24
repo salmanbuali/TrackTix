@@ -12,6 +12,7 @@ import ViewTicket from './pages/ViewTicket'
 import EditTicket from './pages/EditTicket'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
+import EditProfile from './pages/EditProfile'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -52,6 +53,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/profile/:id" element={<Profile />}></Route>
+          <Route path="/profile/:id/edit" element={<EditProfile />}></Route>
           <Route
             path="/createteam"
             element={<CreateTeam user={user} />}
