@@ -33,7 +33,7 @@ const EditTicket = () => {
       priority: formRef.priority.current.value,
       due: formRef.due.current.value
     }
-    await Client.put(`/tickets/${ticketId}`, ticket)
+    await Client.put(`/tickets/${ticketId}?teamId=${teamId}`, ticket)
     navigate(`/teams/${teamId}`)
   }
   return (
