@@ -29,9 +29,9 @@ const ViewTicket = ({ user }) => {
 
   return (
     ticket && (
-      <div className="flex flex-col justify-center">
-        Ticket
-        <h1>HELLO WORLD</h1>
+      <div className="flex flex-col justify-center items-center">
+        <p className="text-3xl">{ticket.subject}</p>
+        <div><img src={ticket.createdBy.avatar} alt="avatar" /> {ticket.createdBy.name}</div>
       </div>
     )
   )

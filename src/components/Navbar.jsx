@@ -20,8 +20,9 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
     getNotifications()
   }, [])
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-800 fixed w-full z-50 ">
       {/* <Notifications notifications={notifications} /> */}
+
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
