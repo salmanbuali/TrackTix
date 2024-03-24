@@ -55,7 +55,7 @@ const ViewTeam = ({ user }) => {
       />
 
       <div
-        className="inline-flex rounded-md justify-between w-2/3 m-auto"
+        className="inline-flex rounded-md justify-between w-full mt-5 m-auto"
         role="group"
       >
         {manager && (
