@@ -103,9 +103,16 @@ const ViewTeam = ({ user }) => {
         </Link>
       </div>
 
-      {viewMembers && <Members members={team?.members} teamId={id} />}
+      {viewMembers && (
+        <Members members={team?.members} teamId={id} manager={manager} />
+      )}
       {!viewMembers && (
-        <Tickets teamId={id} user={user} members={team?.members} />
+        <Tickets
+          teamId={id}
+          user={user}
+          members={team?.members}
+          manager={manager}
+        />
       )}
     </div>
   )

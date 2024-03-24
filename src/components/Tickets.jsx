@@ -9,7 +9,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Tickets = ({ teamId, user, members }) => {
+const Tickets = ({ teamId, user, members, manager }) => {
   const [tickets, setTickets] = useState([])
   const [update, setUpdate] = useState(false)
   const [sorted, setSorted] = useState(false)
