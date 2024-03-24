@@ -14,7 +14,6 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
   useEffect(() => {
     const getNotifications = async () => {
       const response = await Client.get(`/notifications/user/${user?.id}`)
-      console.log(response.data)
       setNotifications(response.data)
     }
     getNotifications()
