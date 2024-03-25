@@ -124,15 +124,20 @@ const Tickets = ({ teamId, user, members, manager }) => {
                 </p>
               </div>
               <div className="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500 dark:text-gray-300">
-                <p className="whitespace-nowrap">
-                  Due on{' '}
-                  <time dateTime={ticket.due}>
-                    {moment(ticket.due).format('Do MMM  YY')}
-                  </time>
-                </p>
-                <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
-                  <circle cx={1} cy={1} r={1} />
-                </svg>
+                {ticket.due && (
+                  <>
+                    <p className="whitespace-nowrap">
+                      Due on{' '}
+                      <time dateTime={ticket.due}>
+                        {moment(ticket.due).format('Do MMM  YY')}
+                      </time>
+                    </p>
+                    <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
+                      <circle cx={1} cy={1} r={1} />
+                    </svg>
+                  </>
+                )}
+
                 <p className="truncate">Created by {ticket.createdBy.name}</p>
                 {ticket.solvedBy && (
                   <>
