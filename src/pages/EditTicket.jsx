@@ -1,35 +1,46 @@
-import { useNavigate, useParams } from "react-router-dom"
-import { useRef } from "react"
-import Client from "../services/api"
-const CreateTicket = ({ user }) => {
+import Client from '../services/api'
+import { useEffect, useState, useRef } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import moment from 'moment'
+
+const EditTicket = () => {
   let navigate = useNavigate()
-  let { id } = useParams()
+  let { teamId, ticketId } = useParams()
+  const [ticket, setTicket] = useState({})
   const formRef = {
     subject: useRef(null),
     content: useRef(null),
-    priority: useRef("Urgent"),
-    attachments: useRef(null),
-    due: useRef(null),
+    priority: useRef(null),
+    due: useRef(null)
   }
+  useEffect(() => {
+    const getTicket = async () => {
+      const response = await Client.get(`/tickets/${ticketId}`)
+      setTicket(response.data)
+      formRef.subject.current.value = response.data.subject
+      formRef.content.current.value = response.data.content
+      formRef.priority.current.value = response.data.priority
+      formRef.due.current.value = moment(response.data.due).format('yyyy-MM-DD')
+    }
+    getTicket()
+  }, [])
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     const ticket = {
       subject: formRef.subject.current.value,
       content: formRef.content.current.value,
       priority: formRef.priority.current.value,
-      attachments: formRef.attachments.current.value,
-      due: formRef.due.current.value,
-      createdBy: user?.id,
+      due: formRef.due.current.value
     }
-    const t = await Client.post(`/tickets/team/${id}`, ticket)
-    console.log(t)
-    // navigate(`/teams/${id}`)
+    await Client.put(`/tickets/${ticketId}?teamId=${teamId}`, ticket)
+    navigate(`/teams/${teamId}`)
   }
   return (
     <div>
       <div>
         <h1 className="  text-center mb-7 mt-3  text-3xl text-gray-900 dark:text-white">
-          Create Ticket
+          {ticket.subject} Ticket
         </h1>
         <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
           <div className="mb-5">
@@ -83,21 +94,6 @@ const CreateTicket = ({ user }) => {
           </div>
           <div className="mb-5">
             <label
-              htmlFor="attachments"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Attachments
-            </label>
-            <input
-              type="text"
-              id="attachments"
-              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required
-              ref={formRef.attachments}
-            />
-          </div>
-          <div className="mb-5">
-            <label
               htmlFor="due"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
@@ -114,7 +110,7 @@ const CreateTicket = ({ user }) => {
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Create
+            Update
           </button>
         </form>
       </div>
@@ -122,4 +118,4 @@ const CreateTicket = ({ user }) => {
   )
 }
 
-export default CreateTicket
+export default EditTicket

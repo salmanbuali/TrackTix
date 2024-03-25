@@ -1,112 +1,102 @@
-import { useNavigate, useParams } from "react-router-dom"
-import { useRef } from "react"
-import Client from "../services/api"
-const CreateTicket = ({ user }) => {
+import { useRef, useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import Client from '../services/api'
+const EditProfile = () => {
+  const [user, setUser] = useState({})
+  const { id } = useParams()
   let navigate = useNavigate()
-  let { id } = useParams()
   const formRef = {
-    subject: useRef(null),
-    content: useRef(null),
-    priority: useRef("Urgent"),
-    attachments: useRef(null),
-    due: useRef(null),
+    name: useRef(null),
+    email: useRef(null),
+    phone: useRef(null),
+    avatar: useRef(null)
   }
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await Client.get(`/users/${id}`)
+      setUser(response.data)
+      formRef.name.current.value = response.data.name
+      formRef.email.current.value = response.data.email
+      formRef.phone.current.value = response.data.phone
+      formRef.avatar.current.value = response.data.avatar
+    }
+    getUser()
+  }, [])
+
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const ticket = {
-      subject: formRef.subject.current.value,
-      content: formRef.content.current.value,
-      priority: formRef.priority.current.value,
-      attachments: formRef.attachments.current.value,
-      due: formRef.due.current.value,
-      createdBy: user?.id,
+    const user = {
+      name: formRef.name.current.value,
+      email: formRef.email.current.value,
+      phone: formRef.phone.current.value,
+      avatar: formRef.avatar.current.value
     }
-    const t = await Client.post(`/tickets/team/${id}`, ticket)
-    console.log(t)
-    // navigate(`/teams/${id}`)
+    await Client.put(`/users/${id}`, user)
+    navigate(`/profile/${id}`)
   }
   return (
     <div>
       <div>
         <h1 className="  text-center mb-7 mt-3  text-3xl text-gray-900 dark:text-white">
-          Create Ticket
+          {user.name}
         </h1>
         <form className="max-w-sm mx-auto" onSubmit={handleSubmit}>
           <div className="mb-5">
             <label
-              htmlFor="subject"
+              htmlFor="name"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Subject:
+              Name
             </label>
             <input
               type="text"
-              id="subject"
+              id="name"
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
-              ref={formRef.subject}
+              ref={formRef.name}
             />
           </div>
           <div className="mb-5">
             <label
-              htmlFor="content"
+              htmlFor="email"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Description
+              Email
             </label>
             <input
-              type="text"
-              id="description"
+              type="email"
+              id="email"
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
-              ref={formRef.content}
+              ref={formRef.email}
             />
           </div>
           <div className="mb-5">
             <label
-              htmlFor="priority"
+              htmlFor="phone"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Select Priority
-            </label>
-            <select
-              id="priority"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              ref={formRef.priority}
-            >
-              <option defaultValue>Choose a Priority</option>
-              <option value="Urgent">Urgent</option>
-              <option value="High">High</option>
-              <option value="Mid">Mid</option>
-              <option value="Low">Low</option>
-            </select>
-          </div>
-          <div className="mb-5">
-            <label
-              htmlFor="attachments"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Attachments
+              Phone
             </label>
             <input
               type="text"
-              id="attachments"
+              id="phone"
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
-              ref={formRef.attachments}
+              ref={formRef.phone}
             />
           </div>
           <div className="mb-5">
             <label
-              htmlFor="due"
+              htmlFor="avatar"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Due Date
+              Avatar
             </label>
             <input
-              type="date"
-              id="due"
-              ref={formRef.due}
+              type="text"
+              id="avatar"
+              ref={formRef.avatar}
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
@@ -114,12 +104,11 @@ const CreateTicket = ({ user }) => {
             type="submit"
             className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
-            Create
+            Edit
           </button>
         </form>
       </div>
     </div>
   )
 }
-
-export default CreateTicket
+export default EditProfile

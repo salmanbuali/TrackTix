@@ -8,6 +8,11 @@ import Navbar from './components/Navbar'
 import CreateTeam from './pages/CreateTeam'
 import ViewTeam from './pages/ViewTeam'
 import CreateTicket from './pages/CreateTicket'
+import ViewTicket from './pages/ViewTicket'
+import EditTicket from './pages/EditTicket'
+import Home from './pages/Home'
+import Profile from './pages/Profile'
+import EditProfile from './pages/EditProfile'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -43,9 +48,12 @@ function App() {
         user={user}
         handleLogOut={handleLogOut}
       />
-      <main className="dark:bg-gray-900 bg-neutral-100 h-screen pt-4">
+      <main className="dark:bg-gray-900 bg-neutral-100 min-h-screen pt-24">
         <Routes>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/register" element={<Register />}></Route>
+          <Route path="/profile/:id" element={<Profile />}></Route>
+          <Route path="/profile/:id/edit" element={<EditProfile />}></Route>
           <Route
             path="/createteam"
             element={<CreateTeam user={user} />}
@@ -53,6 +61,14 @@ function App() {
           <Route path="/login" element={<Login setUser={setUser} />}></Route>
           <Route path="/teams" element={<Teams user={user} />}></Route>
           <Route path="/teams/:id" element={<ViewTeam user={user} />}></Route>
+          <Route
+            path="/tickets/:id/team/:teamId"
+            element={<ViewTicket user={user} />}
+          ></Route>
+          <Route
+            path="/teams/:teamId/edit/:ticketId"
+            element={<EditTicket user={user} />}
+          ></Route>
           <Route
             path="/teams/:id/createticket/"
             element={<CreateTicket user={user} />}
