@@ -231,7 +231,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
                         )}
                       </Menu.Item>
                     )}
-                    {ticket.member &&
+                    { !ticket.solvedBy &&
                       !ticket.member.some(
                         (member) => member._id === user.id
                       ) && (

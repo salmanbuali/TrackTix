@@ -163,13 +163,13 @@ const ViewTicket = ({ user }) => {
                     {moment(ticket.createdAt).format('MMMM DD,  YYYY')}
                   </dd>
                 </div>
-                <div className="mt-2 sm:mt-0 sm:pl-4">
-                  <dt className="inline text-gray-500 font-semibold dark:text-gray-50">
-                    Due on
-                  </dt>{' '}
+                 <div className="mt-2 sm:mt-0 sm:pl-4">
+                 {ticket.due && <><dt className="inline text-gray-500 font-semibold dark:text-gray-50">
+                    Due on&nbsp;
+                  </dt>
                   <dd className="inline text-gray-700 dark:text-gray-300">
                     {moment(ticket.due).format('MMMM DD,  YYYY')}
-                  </dd>
+                  </dd> </>}
                 </div>
 
                 <div className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
@@ -188,7 +188,7 @@ const ViewTicket = ({ user }) => {
                   <ArrowUturnLeftIcon className="size-5" />
                   Back
                 </button>
-                {ticket.member
+                {!ticket.solvedBy && ticket.member
                   .map((member) => member._id)
                   .includes(user.id) && (
                   <button
