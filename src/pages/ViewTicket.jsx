@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import Client from '../services/api'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -45,7 +46,12 @@ const ViewTicket = ({ user }) => {
     }
     await Client.post(`/tickets/${id}/comments`, comment)
     setUpdate(true)
-    comment.current.value = ''
+    content.current.value = ''
+  }
+
+  const deleteComment = async (commentId) => {
+    await Client.delete(`/tickets/${id}/comments/${commentId}`)
+    setUpdate(true)
   }
 
   const solved = async () => {
@@ -176,6 +182,7 @@ const ViewTicket = ({ user }) => {
               <h2 className="text-sm font-semibold leading-6 text-gray-900">
                 Comments
               </h2>
+
               <ul role="list" className="mt-6 space-y-6">
                 {ticket.comments.map((comment) => (
                   <li key={comment.id} className="relative flex gap-x-4">
@@ -193,6 +200,21 @@ const ViewTicket = ({ user }) => {
                             </span>{' '}
                             commented
                           </div>
+                          {user.id === comment.member._id && (
+                            <button
+                              onClick={() => {
+                                deleteComment(comment._id)
+                              }}
+                              type="button"
+                              className="rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            >
+                              {' '}
+                              <XMarkIcon
+                                className="h-4 w-4"
+                                aria-hidden="true"
+                              />{' '}
+                            </button>
+                          )}
                         </div>
                         <p className="text-sm leading-6 text-gray-500 text-wrap">
                           {comment.content}
