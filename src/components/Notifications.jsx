@@ -44,14 +44,20 @@ const Notifications = ({ open, setOpen, cancelButtonRef, notifications }) => {
                       </div>
                       <Dialog.Title
                         as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
+                        className="flex items-center text-base font-semibold leading-6 text-gray-900"
                       >
-                        Notifications
+                        <span className="flex-grow ml-10">Notifications</span>
+                        <button type="button" className="mr-2">
+                          Clear
+                        </button>
                       </Dialog.Title>
                       <div className="mt-5">
                         <ul>
                           {notifications?.map((noti, i) => (
-                            <li key={i}>
+                            <li
+                              key={i}
+                              className="flex justify-between px-5 my-1"
+                            >
                               {noti.content}{' '}
                               <button
                                 type="button"
