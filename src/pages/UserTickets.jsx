@@ -85,7 +85,7 @@ const UserTickets = () => {
           <option value="d">Due Date</option>
         </select>
       </div>
-      <ul role="list" className="divide-y divide-gray-300 m-auto">
+      <ul role="list" className="divide-y divide-gray-500 m-auto">
         {tickets?.map((ticket) => (
           <li
             key={ticket._id}

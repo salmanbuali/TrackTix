@@ -116,7 +116,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
           <option value="d">Due Date</option>
         </select>
       </div>
-      <ul role="list" className="divide-y divide-gray-300 m-auto">
+      <ul role="list" className="divide-y divide-gray-500 m-auto">
         {tickets?.map((ticket) => (
           <li
             key={ticket._id}
@@ -178,83 +178,88 @@ const Tickets = ({ teamId, user, members, manager }) => {
               >
                 View ticket<span className="sr-only">, {ticket.name}</span>
               </Link>
-              <Menu as="div" className="relative flex-none">
-                <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
-                  <span className="sr-only">Open options</span>
-                  <EllipsisVerticalIcon
-                    className="h-5 w-5"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
-                <Transition
-                  as={Fragment}
-                  enter="transition ease-out duration-100"
-                  enterFrom="transform opacity-0 scale-95"
-                  enterTo="transform opacity-100 scale-100"
-                  leave="transition ease-in duration-75"
-                  leaveFrom="transform opacity-100 scale-100"
-                  leaveTo="transform opacity-0 scale-95"
+              {
+                /* {ticket.solvedBy && */ <Menu
+                  as="div"
+                  className="relative flex-none"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                    {(manager || user.id === ticket.createdBy._id) && (
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            onClick={() => {
-                              edit(ticket._id)
-                            }}
-                            className={classNames(
-                              active ? 'bg-gray-50' : '',
-                              'block px-3 py-1 text-sm leading-6 text-gray-900'
-                            )}
-                          >
-                            Edit
-                          </a>
-                        )}
-                      </Menu.Item>
-                    )}
-                    {manager && true && (
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            onClick={() => {
-                              ticketToAssign.current = ticket
-                              setOpen(true)
-                            }}
-                            className={classNames(
-                              active ? 'bg-gray-50' : '',
-                              'block px-3 py-1 text-sm leading-6 text-gray-900'
-                            )}
-                          >
-                            Assign to member
-                          </a>
-                        )}
-                      </Menu.Item>
-                    )}
-                    { !ticket.solvedBy &&
-                      !ticket.member.some(
-                        (member) => member._id === user.id
-                      ) && (
+                  <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
+                    <span className="sr-only">Open options</span>
+                    <EllipsisVerticalIcon
+                      className="h-5 w-5"
+                      aria-hidden="true"
+                    />
+                  </Menu.Button>
+                  <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                  >
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                      {(manager || user.id === ticket.createdBy._id) && (
                         <Menu.Item>
                           {({ active }) => (
                             <a
                               onClick={() => {
-                                assign(ticket._id)
+                                edit(ticket._id)
                               }}
                               className={classNames(
                                 active ? 'bg-gray-50' : '',
                                 'block px-3 py-1 text-sm leading-6 text-gray-900'
                               )}
                             >
-                              Assign
-                              <span className="sr-only">, {ticket.name}</span>
+                              Edit
                             </a>
                           )}
                         </Menu.Item>
                       )}
-                  </Menu.Items>
-                </Transition>
-              </Menu>
+                      {manager && true && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={() => {
+                                ticketToAssign.current = ticket
+                                setOpen(true)
+                              }}
+                              className={classNames(
+                                active ? 'bg-gray-50' : '',
+                                'block px-3 py-1 text-sm leading-6 text-gray-900'
+                              )}
+                            >
+                              Assign to member
+                            </a>
+                          )}
+                        </Menu.Item>
+                      )}
+                      {!ticket.solvedBy &&
+                        !ticket.member.some(
+                          (member) => member._id === user.id
+                        ) && (
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                onClick={() => {
+                                  assign(ticket._id)
+                                }}
+                                className={classNames(
+                                  active ? 'bg-gray-50' : '',
+                                  'block px-3 py-1 text-sm leading-6 text-gray-900'
+                                )}
+                              >
+                                Assign
+                                <span className="sr-only">, {ticket.name}</span>
+                              </a>
+                            )}
+                          </Menu.Item>
+                        )}
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              }
             </div>
           </li>
         ))}
