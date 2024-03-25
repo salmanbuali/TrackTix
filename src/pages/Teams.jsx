@@ -8,6 +8,7 @@ const Teams = ({ user }) => {
   const [teams, setTeams] = useState([])
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
+  const [checkInv, setCheckInv] = useState(false)
 
   useEffect(() => {
     const getTeams = async () => {
@@ -15,7 +16,7 @@ const Teams = ({ user }) => {
       setTeams(response.data)
     }
     getTeams()
-  }, [])
+  }, [checkInv])
 
   return teams.length ? (
     <div className="w-3/4 m-auto">
@@ -98,6 +99,7 @@ const Teams = ({ user }) => {
           className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
           onClick={() => {
             setOpen(true)
+            setCheckInv(prev => !prev)
           }}
         >
           <InboxArrowDownIcon className="w-6 h-6 mr-2" />

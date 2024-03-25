@@ -2,7 +2,13 @@ import { useEffect, useState, useRef } from 'react'
 import Client from '../services/api'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
-import { XMarkIcon } from '@heroicons/react/24/outline'
+import {
+  XMarkIcon,
+  UserGroupIcon,
+  ArrowUturnLeftIcon,
+  ArrowLeftStartOnRectangleIcon,
+  CheckIcon
+} from '@heroicons/react/24/outline'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -77,7 +83,6 @@ const ViewTicket = ({ user }) => {
       <div className="flex flex-col justify-center items-center w-full m-auto">
         <div className="mx-auto w-3/4 px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-            {/* Invoice summary */}
             <div className="lg:col-start-3 lg:row-end-1">
               <div className="rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
                 <dl className="flex flex-wrap">
@@ -93,7 +98,6 @@ const ViewTicket = ({ user }) => {
               </div>
             </div>
 
-            {/* Invoice */}
             <div className="shadow-sm ring-1 ring-gray-900/5 sm:mx-0 sm:rounded-lg lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-12 xl:pt-16">
               <div className="flex items-center justify-between">
                 <h2 className="text-base font-semibold leading-6 text-gray-900">
@@ -130,6 +134,20 @@ const ViewTicket = ({ user }) => {
                   {ticket.createdBy.name}
                 </dd>
               </dt>
+              <dt className="flex mt-5">
+                <dt className="inline text-gray-500 text-sm">Assigned to</dt>
+                <UserGroupIcon className="size-6 mx-2" />
+                <dd className="text-sm font-medium leading-6 text-gray-900">
+                  <div>
+                    {ticket.member.map((member, i) => (
+                      <span key={i}>
+                        {member.name}
+                        {i !== ticket.member.length - 1 && ' - '}{' '}
+                      </span>
+                    ))}
+                  </div>
+                </dd>
+              </dt>
               <dl className="mt-6 grid grid-cols-1 text-sm leading-6 sm:grid-cols-2">
                 <div className="sm:pr-4">
                   <dt className="inline text-gray-500">Issued on</dt>{' '}
@@ -152,29 +170,38 @@ const ViewTicket = ({ user }) => {
                   </dd>
                 </div>
               </dl>
-              {ticket.status !== 'Complete' &&
-                ticket.member.map((member) => member._id).includes(user.id) && (
-                  <button
-                    onClick={solved}
-                    className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
-                  >
-                    Solved
-                  </button>
-                )}
-              <button
-                onClick={back}
-                className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
-              >
-                Back
-              </button>
-              {ticket.member.map((member) => member._id).includes(user.id) && (
+              <div className="flex gap-5">
                 <button
-                  onClick={leave}
+                  onClick={back}
                   className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
                 >
-                  Leave
+                  <ArrowUturnLeftIcon className="size-5" />
+                  Back
                 </button>
-              )}
+                {ticket.member
+                  .map((member) => member._id)
+                  .includes(user.id) && (
+                  <button
+                    onClick={leave}
+                    className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                  >
+                    <ArrowLeftStartOnRectangleIcon className="size-5" />
+                    Leave
+                  </button>
+                )}
+                {ticket.status !== 'Complete' &&
+                  ticket.member
+                    .map((member) => member._id)
+                    .includes(user.id) && (
+                    <button
+                      onClick={solved}
+                      className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                    >
+                      <CheckIcon className="size-5"/>
+                      Solved
+                    </button>
+                  )}
+              </div>
             </div>
 
             <div className="lg:col-start-3">

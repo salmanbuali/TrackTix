@@ -1,11 +1,15 @@
+import { useNavigate } from 'react-router-dom'
 import Client from '../services/api'
 import { useRef } from 'react'
+useNavigate
 const CreateTeam = ({ user }) => {
   const formRef = {
     name: useRef(null),
     avatar: useRef(null)
   }
 
+  let navigate = useNavigate()
+  
   const handleSubmit = async (e) => {
     e.preventDefault()
     const newTeam = {
@@ -14,6 +18,7 @@ const CreateTeam = ({ user }) => {
       avatar: formRef.avatar.current.value
     }
     await Client.post(`/teams`, newTeam)
+    navigate('/teams')
     e.target.reset()
   }
 
