@@ -20,6 +20,7 @@ const CreateTicket = ({ user }) => {
       attachments: formRef.attachments.current.value,
       due: formRef.due.current.value,
       createdBy: user?.id,
+      team: id,
     }
     const t = await Client.post(`/tickets/team/${id}`, ticket)
     console.log(t)

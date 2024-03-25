@@ -1,24 +1,17 @@
-import { Fragment, useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Menu, Transition } from '@headlessui/react'
-import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
-import AssignMemberDialog from './AssignMemberDialog'
+import { useEffect, useState, useRef } from 'react'
 import Client from '../services/api'
 import moment from 'moment'
+import { useNavigate, Link, useParams } from 'react-router-dom'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Tickets = ({ teamId, user, members, manager }) => {
-  const [tickets, setTickets] = useState([])
-  const [update, setUpdate] = useState(false)
+const UserTickets = () => {
+  const { id } = useParams()
+  const [tickets, setTickets] = useState()
   const [sorted, setSorted] = useState(false)
-  const [unsortedTickets, setUnsortedTickets] = useState([])
   const orderRef = useRef(null)
-  const ticketToAssign = useRef(null)
-  const [open, setOpen] = useState(false)
-
   let navigate = useNavigate()
   // don't delete
   const statuses = {
@@ -34,29 +27,13 @@ const Tickets = ({ teamId, user, members, manager }) => {
     High: 'text-white dark:text-black bg-orange-600 ring-yellow-600/20',
     Urgent: 'text-white dark:text-black bg-red-600 ring-yellow-600/20'
   }
-
   useEffect(() => {
     const getTickets = async () => {
-      const response = await Client.get(`/tickets/team/${teamId}`)
-      setUnsortedTickets(response.data)
-      setTickets(response.data)
-      console.log(manager)
+      const response = await Client.get(`/users/${id}`)
+      setTickets(response.data.tickets)
     }
     getTickets()
-  }, [update, open])
-
-  useEffect(() => {
-    return
-  }, [sorted])
-
-  const assign = async (ticketId) => {
-    await Client.put(`/tickets/${ticketId}/assign`, { member: user.id })
-    setUpdate(true)
-  }
-
-  const edit = (ticketId) => {
-    navigate(`/teams/${teamId}/edit/${ticketId}`)
-  }
+  }, [])
 
   const sort = () => {
     let temp = tickets
@@ -92,14 +69,6 @@ const Tickets = ({ teamId, user, members, manager }) => {
 
   return tickets ? (
     <div className="w-full mt-5 m-auto">
-      {open && (
-        <AssignMemberDialog
-          open={open}
-          setOpen={setOpen}
-          members={members}
-          ticket={ticketToAssign.current}
-        />
-      )}
       <div className="max-w-sm mx-auto">
         <select
           onChange={sort}
@@ -173,93 +142,11 @@ const Tickets = ({ teamId, user, members, manager }) => {
               </p>
 
               <Link
-                to={`/tickets/${ticket._id}/team/${teamId}`}
+                to={`/tickets/${ticket._id}/team/${ticket.team?._id}`}
                 className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-90shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block dark:text-gray-200 dark:bg-gray-400/10"
               >
                 View ticket<span className="sr-only">, {ticket.name}</span>
               </Link>
-              {
-                /* {ticket.solvedBy && */ <Menu
-                  as="div"
-                  className="relative flex-none"
-                >
-                  <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
-                    <span className="sr-only">Open options</span>
-                    <EllipsisVerticalIcon
-                      className="h-5 w-5"
-                      aria-hidden="true"
-                    />
-                  </Menu.Button>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                      {(manager || user.id === ticket.createdBy._id) && (
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              onClick={() => {
-                                edit(ticket._id)
-                              }}
-                              className={classNames(
-                                active ? 'bg-gray-50' : '',
-                                'block px-3 py-1 text-sm leading-6 text-gray-900'
-                              )}
-                            >
-                              Edit
-                            </a>
-                          )}
-                        </Menu.Item>
-                      )}
-                      {manager && true && (
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              onClick={() => {
-                                ticketToAssign.current = ticket
-                                setOpen(true)
-                              }}
-                              className={classNames(
-                                active ? 'bg-gray-50' : '',
-                                'block px-3 py-1 text-sm leading-6 text-gray-900'
-                              )}
-                            >
-                              Assign to member
-                            </a>
-                          )}
-                        </Menu.Item>
-                      )}
-                      {!ticket.solvedBy &&
-                        !ticket.member.some(
-                          (member) => member._id === user.id
-                        ) && (
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                onClick={() => {
-                                  assign(ticket._id)
-                                }}
-                                className={classNames(
-                                  active ? 'bg-gray-50' : '',
-                                  'block px-3 py-1 text-sm leading-6 text-gray-900'
-                                )}
-                              >
-                                Assign
-                                <span className="sr-only">, {ticket.name}</span>
-                              </a>
-                            )}
-                          </Menu.Item>
-                        )}
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              }
             </div>
           </li>
         ))}
@@ -270,4 +157,4 @@ const Tickets = ({ teamId, user, members, manager }) => {
   )
 }
 
-export default Tickets
+export default UserTickets
