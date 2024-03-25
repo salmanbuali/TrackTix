@@ -201,21 +201,24 @@ const Tickets = ({ teamId, user, members, manager }) => {
                         )}
                       </Menu.Item>
                     )}
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          onClick={() => {
-                            assign(ticket._id)
-                          }}
-                          className={classNames(
-                            active ? 'bg-gray-50' : '',
-                            'block px-3 py-1 text-sm leading-6 text-gray-900'
-                          )}
-                        >
-                          Assign<span className="sr-only">, {ticket.name}</span>
-                        </a>
-                      )}
-                    </Menu.Item>
+                    {ticket.member && !ticket.member.some(member => member._id === user.id) && (
+                      <Menu.Item>
+                        {({ active }) => (
+                          <a
+                            onClick={() => {
+                              assign(ticket._id)
+                            }}
+                            className={classNames(
+                              active ? 'bg-gray-50' : '',
+                              'block px-3 py-1 text-sm leading-6 text-gray-900'
+                            )}
+                          >
+                            Assign
+                            <span className="sr-only">, {ticket.name}</span>
+                          </a>
+                        )}
+                      </Menu.Item>
+                    )}
                   </Menu.Items>
                 </Transition>
               </Menu>

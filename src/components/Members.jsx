@@ -31,10 +31,7 @@ const Members = ({ members, teamId, manager, setRoleAdded }) => {
     setUpdate(true)
   }
   return (
-    <ul
-      role="list"
-      className="divide-y dark:divide-gray-700 divide-gray-300 w-full m-auto"
-    >
+    <>
       <AddRole
         open={open}
         setOpen={setOpen}
@@ -44,8 +41,12 @@ const Members = ({ members, teamId, manager, setRoleAdded }) => {
         teamId={teamId}
         setRoleAdded={setRoleAdded}
       />
-      {members?.map((member) => (
-        <>
+
+      <ul
+        role="list"
+        className="divide-y dark:divide-gray-700 divide-gray-300 w-full m-auto"
+      >
+        {members?.map((member) => (
           <li key={member.email} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
               <img
@@ -65,11 +66,10 @@ const Members = ({ members, teamId, manager, setRoleAdded }) => {
             <div className="shrink-0 sm:items-end flex mb-5">
               <p className="text-sm leading-6 dark:text-white text-gray-900">
                 {member.roles?.map(
-                  (role) => role.team._id === teamId && <span> {role.name} &nbsp;</span> 
+                  (role) =>
+                    role.team._id === teamId && <span> {role.name} &nbsp;</span>
                 )}
-                
               </p>
-              
 
               {manager && (
                 <Menu as="div" className="relative flex-none">
@@ -142,9 +142,9 @@ const Members = ({ members, teamId, manager, setRoleAdded }) => {
               )}
             </div>
           </li>
-        </>
-      ))}
-    </ul>
+        ))}
+      </ul>
+    </>
   )
 }
 

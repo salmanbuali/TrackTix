@@ -7,7 +7,8 @@ import {
   UserGroupIcon,
   ArrowUturnLeftIcon,
   ArrowLeftStartOnRectangleIcon,
-  CheckIcon
+  CheckIcon,
+  LinkIcon
 } from '@heroicons/react/24/outline'
 
 function classNames(...classes) {
@@ -84,23 +85,24 @@ const ViewTicket = ({ user }) => {
         <div className="mx-auto w-3/4 px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div className="lg:col-start-3 lg:row-end-1">
-              <div className="rounded-lg bg-gray-50 shadow-sm ring-1 ring-gray-900/5">
+              <div className="rounded-lg bg-gray-50 dark:bg-slate-800 shadow-sm ring-1 ring-gray-900/5">
                 <dl className="flex flex-wrap">
                   <div className="flex-auto pl-6 pt-6 pb-6">
-                    <dt className="text-sm font-semibold leading-6 text-gray-900">
+                    <dt className="flex gap-2 mb-5 font-semibold leading-6 text-lg text-gray-900 dark:text-white">
+                      <LinkIcon className="size-5" />
                       Attachments
                     </dt>
                     {ticket.attachments.map((a) => (
-                      <p>{a}</p>
+                      <p className="dark:text-white">{a}</p>
                     ))}
                   </div>
                 </dl>
               </div>
             </div>
 
-            <div className="shadow-sm ring-1 ring-gray-900/5 sm:mx-0 sm:rounded-lg lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-12 xl:pt-16">
+            <div className="shadow-sm ring-1 dark:bg-slate-800 ring-gray-900/5 sm:mx-0 sm:rounded-lg lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-12 xl:pt-16">
               <div className="flex items-center justify-between">
-                <h2 className="text-base font-semibold leading-6 text-gray-900">
+                <h2 className="text-2xl font-semibold leading-6 text-gray-900 dark:text-white">
                   {ticket.subject}
                 </h2>
                 <div className="flex gap-3">
@@ -124,23 +126,27 @@ const ViewTicket = ({ user }) => {
                 </div>
               </div>
               <dt className="flex mt-5">
-                <dt className="inline text-gray-500 text-sm">Created By</dt>
+                <dt className="inline text-gray-500 text-sm dark:text-gray-300">
+                  Created By
+                </dt>
                 <img
                   src={ticket.createdBy.avatar}
                   className="h-6 w-5 ml-3 rounded-3xl mr-2"
                   alt=""
                 />
-                <dd className="text-sm font-medium leading-6 text-gray-900">
+                <dd className="text-sm font-medium leading-6 text-gray-900 dark:text-gray-300">
                   {ticket.createdBy.name}
                 </dd>
               </dt>
               <dt className="flex mt-5">
-                <dt className="inline text-gray-500 text-sm">Assigned to</dt>
-                <UserGroupIcon className="size-6 mx-2" />
+                <dt className="inline text-gray-500 dark:text-gray-300 text-sm">
+                  Assigned to
+                </dt>
+                <UserGroupIcon className="size-6 mx-2 dark:text-gray-300" />
                 <dd className="text-sm font-medium leading-6 text-gray-900">
                   <div>
                     {ticket.member.map((member, i) => (
-                      <span key={i}>
+                      <span key={i} className="dark:text-gray-300">
                         {member.name}
                         {i !== ticket.member.length - 1 && ' - '}{' '}
                       </span>
@@ -150,21 +156,25 @@ const ViewTicket = ({ user }) => {
               </dt>
               <dl className="mt-6 grid grid-cols-1 text-sm leading-6 sm:grid-cols-2">
                 <div className="sm:pr-4">
-                  <dt className="inline text-gray-500">Issued on</dt>{' '}
-                  <dd className="inline text-gray-700">
+                  <dt className="inline text-gray-500 font-semibold dark:text-gray-50">
+                    Issued on
+                  </dt>{' '}
+                  <dd className="inline text-gray-700 dark:text-gray-300">
                     {moment(ticket.createdAt).format('MMMM DD,  YYYY')}
                   </dd>
                 </div>
                 <div className="mt-2 sm:mt-0 sm:pl-4">
-                  <dt className="inline text-gray-500">Due on</dt>{' '}
-                  <dd className="inline text-gray-700">
+                  <dt className="inline text-gray-500 font-semibold dark:text-gray-50">
+                    Due on
+                  </dt>{' '}
+                  <dd className="inline text-gray-700 dark:text-gray-300">
                     {moment(ticket.due).format('MMMM DD,  YYYY')}
                   </dd>
                 </div>
 
                 <div className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
                   <dd className="mt-2 text-gray-500">
-                    <span className="font-medium text-gray-900">
+                    <span className="font-medium text-gray-900 dark:text-gray-300">
                       {ticket.content}
                     </span>
                   </dd>
@@ -173,7 +183,7 @@ const ViewTicket = ({ user }) => {
               <div className="flex gap-5">
                 <button
                   onClick={back}
-                  className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                  className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
                 >
                   <ArrowUturnLeftIcon className="size-5" />
                   Back
@@ -183,7 +193,7 @@ const ViewTicket = ({ user }) => {
                   .includes(user.id) && (
                   <button
                     onClick={leave}
-                    className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                    className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
                   >
                     <ArrowLeftStartOnRectangleIcon className="size-5" />
                     Leave
@@ -195,9 +205,9 @@ const ViewTicket = ({ user }) => {
                     .includes(user.id) && (
                     <button
                       onClick={solved}
-                      className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                      className="mt-12 rounded-lg px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 bg-green-600 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
                     >
-                      <CheckIcon className="size-5"/>
+                      <CheckIcon className="size-5" />
                       Solved
                     </button>
                   )}
@@ -222,7 +232,7 @@ const ViewTicket = ({ user }) => {
                       <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200">
                         <div className="flex justify-between gap-x-4">
                           <div className="py-0.5 text-xs leading-5 text-gray-500">
-                            <span className="font-medium text-gray-900">
+                            <span className="font-medium text-gray-900 dark:text-gray-100">
                               {comment.member.name}
                             </span>{' '}
                             commented
@@ -243,7 +253,7 @@ const ViewTicket = ({ user }) => {
                             </button>
                           )}
                         </div>
-                        <p className="text-sm leading-6 text-gray-500 text-wrap">
+                        <p className="text-xs leading-6 text-gray-500 dark:text-white text-wrap">
                           {comment.content}
                         </p>
                       </div>
