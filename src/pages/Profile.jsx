@@ -21,8 +21,12 @@ const Profile = () => {
     <div>
       <div className="w-2/3 m-auto">
         <div className="px-4 sm:px-0">
-          <h3 className="text-base font-semibold leading-7 flex justify-between text-gray-800 dark:text-white">
-            Profile
+          <div className="text-base font-semibold leading-7 flex justify-between items-center text-gray-800 dark:text-white">
+            <img
+              src={user.avatar}
+              alt="avatar"
+              className="size-24 rounded-full shadow-lg"
+            />
             <button
               type="button"
               className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
@@ -33,8 +37,8 @@ const Profile = () => {
               <PencilSquareIcon className="w-5 h-5" />
               Edit
             </button>
-          </h3>
-          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-800 dark:text-gray-300">
+          </div>
+          <p className="mt-10 max-w-2xl text-sm leading-6 text-gray-800 dark:text-gray-300">
             Your Personal details
           </p>
         </div>
