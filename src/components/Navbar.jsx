@@ -1,8 +1,7 @@
-import { Fragment, useEffect, useState, useRef } from 'react'
+import { Fragment, useState, useRef } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MoonIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
-import Client from '../services/api'
 import Notifications from './Notifications'
 
 function classNames(...classes) {
@@ -10,18 +9,10 @@ function classNames(...classes) {
 }
 
 const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
-  const [notifications, setNotifications] = useState([])
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
 
   let navigate = useNavigate()
-  useEffect(() => {
-    const getNotifications = async () => {
-      const response = await Client.get(`/notifications/user/${user?.id}`)
-      setNotifications(response.data)
-    }
-    if (user) getNotifications()
-  }, [user])
   const profile = () => {
     navigate(`/profile/${user.id}`)
   }
@@ -29,14 +20,13 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
     <Disclosure as="nav" className="bg-gray-800 fixed w-full z-50 ">
       {({ o }) => (
         <>
-          {notifications.length > 0 && (
-            <Notifications
-              notifications={notifications}
-              open={open}
-              setOpen={setOpen}
-              cancelButtonRef={cancelButtonRef}
-            />
-          )}
+          <Notifications
+            user={user}
+            open={open}
+            setOpen={setOpen}
+            cancelButtonRef={cancelButtonRef}
+          />
+
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
@@ -64,14 +54,16 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex items-center">
-                  <button
-                    type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    onClick={() => setOpen(true)}
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  {user && (
+                    <button
+                      type="button"
+                      className="relative rounded-full bg-gray-800 p-1 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      onClick={() => setOpen(true)}
+                    >
+                      <span className="absolute -inset-1.5" />
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  )}
 
                   <button onClick={toggleDarkMode} className="text-gray-200">
                     <MoonIcon className="h-6 w-6" />

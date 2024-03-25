@@ -1,9 +1,24 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { BellAlertIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
+import Client from '../services/api'
 
-const Notifications = ({ open, setOpen, cancelButtonRef, notifications }) => {
+const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
+  const [notifications, setNotifications] = useState([])
+  const [reload, setReload] = useState()
+  useEffect(() => {
+    const getNotifications = async () => {
+      const response = await Client.get(`/notifications/user/${user?.id}`)
+      setNotifications(response.data)
+    }
+    if (user) getNotifications()
+  }, [reload])
+
+  const remove = async (id, i) => {
+    await Client.delete(`/notifications/${id}`)
+    setReload((prev) => !prev)
+  }
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
@@ -54,6 +69,9 @@ const Notifications = ({ open, setOpen, cancelButtonRef, notifications }) => {
                             <li key={i}>
                               {noti.content}{' '}
                               <button
+                                onClick={() => {
+                                  remove(noti._id, i)
+                                }}
                                 type="button"
                                 className="rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                               >
