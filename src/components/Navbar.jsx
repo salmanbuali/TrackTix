@@ -10,18 +10,10 @@ function classNames(...classes) {
 }
 
 const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
-  const [notifications, setNotifications] = useState([])
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
 
   let navigate = useNavigate()
-  useEffect(() => {
-    const getNotifications = async () => {
-      const response = await Client.get(`/notifications/user/${user?.id}`)
-      setNotifications(response.data)
-    }
-    if (user) getNotifications()
-  }, [user])
   const profile = () => {
     navigate(`/profile/${user.id}`)
   }
@@ -29,14 +21,13 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
     <Disclosure as="nav" className="bg-gray-800 fixed w-full z-50 ">
       {({ o }) => (
         <>
-          {notifications.length > 0 && (
-            <Notifications
-              notifications={notifications}
-              open={open}
-              setOpen={setOpen}
-              cancelButtonRef={cancelButtonRef}
-            />
-          )}
+          <Notifications
+            user={user}
+            open={open}
+            setOpen={setOpen}
+            cancelButtonRef={cancelButtonRef}
+          />
+
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
