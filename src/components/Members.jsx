@@ -19,10 +19,7 @@ const Members = ({ members, teamId, manager, setRoleAdded }) => {
   }, [update])
 
   const removeRoles = async (id) => {
-    const res = await Client.delete(`/teams/${teamId}/removeroles`, {
-      member: id
-    })
-    console.log(res)
+    const res = await Client.delete(`/teams/${teamId}/removeroles/${id}`)
     setUpdate(true)
   }
 

@@ -186,7 +186,7 @@ const ViewTicket = ({ user }) => {
                   className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
                 >
                   <ArrowUturnLeftIcon className="size-5" />
-                  Back
+                  Team
                 </button>
                 {!ticket.solvedBy && ticket.member
                   .map((member) => member._id)

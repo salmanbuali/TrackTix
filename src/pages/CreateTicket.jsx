@@ -19,7 +19,8 @@ const CreateTicket = ({ user }) => {
       priority: formRef.priority.current.value,
       attachments: formRef.attachments.current.value,
       due: formRef.due.current.value,
-      createdBy: user?.id
+      createdBy: user?.id,
+      team: id
     }
     await Client.post(`/tickets/team/${id}`, ticket)
     navigate(`/teams/${id}`)
