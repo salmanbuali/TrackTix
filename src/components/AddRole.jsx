@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Client from '../services/api'
 
-const AddRole = ({ teamId, member, open, setOpen, cancelButtonRef, setUpdate }) => {
+const AddRole = ({ teamId, member, open, setOpen, cancelButtonRef, setUpdate, setRoleAdded }) => {
   const name = useRef('')
 
   const handleSubmit = async (e) => {
@@ -12,12 +12,11 @@ const AddRole = ({ teamId, member, open, setOpen, cancelButtonRef, setUpdate }) 
       name: name.current.value,
       team: teamId
     }
-    console.log(role)
-    console.log(member)
     await Client.put(`/roles/user/${member}/assign`, role)
     e.target.reset()
     setOpen(false)
     setUpdate(true)
+    setRoleAdded(prev => !prev)
   }
   return (
     <div>

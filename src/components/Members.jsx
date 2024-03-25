@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Members = ({ members, teamId, manager }) => {
+const Members = ({ members, teamId, manager, setRoleAdded }) => {
   const [update, setUpdate] = useState(false)
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
@@ -42,6 +42,7 @@ const Members = ({ members, teamId, manager }) => {
         setUpdate={setUpdate}
         member={addrolememberId.current}
         teamId={teamId}
+        setRoleAdded={setRoleAdded}
       />
       {members?.map((member) => (
         <>
