@@ -1,8 +1,7 @@
-import { Fragment, useEffect, useState, useRef } from 'react'
+import { Fragment, useState, useRef } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { BellIcon, MoonIcon, UserGroupIcon } from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
-import Client from '../services/api'
 import Notifications from './Notifications'
 
 function classNames(...classes) {
@@ -55,14 +54,16 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
               </div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex items-center">
-                  <button
-                    type="button"
-                    className="relative rounded-full bg-gray-800 p-1 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    onClick={() => setOpen(true)}
-                  >
-                    <span className="absolute -inset-1.5" />
-                    <BellIcon className="h-6 w-6" aria-hidden="true" />
-                  </button>
+                  {user && (
+                    <button
+                      type="button"
+                      className="relative rounded-full bg-gray-800 p-1 text-gray-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                      onClick={() => setOpen(true)}
+                    >
+                      <span className="absolute -inset-1.5" />
+                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                    </button>
+                  )}
 
                   <button onClick={toggleDarkMode} className="text-gray-200">
                     <MoonIcon className="h-6 w-6" />
