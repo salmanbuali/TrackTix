@@ -34,6 +34,7 @@ const ViewTicket = ({ user }) => {
       setTicket(response.data)
     }
     getTicket()
+    setUpdate(false)
   }, [update])
 
   const addComment = async (e) => {
@@ -193,7 +194,7 @@ const ViewTicket = ({ user }) => {
                             commented
                           </div>
                         </div>
-                        <p className="text-sm leading-6 text-gray-500">
+                        <p className="text-sm leading-6 text-gray-500 text-wrap">
                           {comment.content}
                         </p>
                       </div>
