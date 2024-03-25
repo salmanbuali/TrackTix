@@ -54,10 +54,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/profile/:id" element={<Profile />}></Route>
-          <Route
-            path="/mytickets"
-            element={<UserTickets user={user} />}
-          ></Route>
+          <Route path="/mytickets/:id" element={<UserTickets />}></Route>
           <Route path="/profile/:id/edit" element={<EditProfile />}></Route>
           <Route
             path="/createteam"

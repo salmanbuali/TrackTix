@@ -51,7 +51,7 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                     )}
                     {user && (
                       <Link
-                        to="/mytickets"
+                        to={`/mytickets/${user?.id}`}
                         className="flex items-center rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                       >
                         <UserGroupIcon className="h-6 w-6 mr-1" />

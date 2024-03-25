@@ -1,13 +1,14 @@
 import { useEffect, useState, useRef } from 'react'
 import Client from '../services/api'
 import moment from 'moment'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useParams } from 'react-router-dom'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const UserTickets = ({ user }) => {
+const UserTickets = () => {
+  const { id } = useParams()
   const [tickets, setTickets] = useState()
   const [sorted, setSorted] = useState(false)
   const orderRef = useRef(null)
@@ -28,8 +29,7 @@ const UserTickets = ({ user }) => {
   }
   useEffect(() => {
     const getTickets = async () => {
-      const response = await Client.get(`/users/${user?.id}`)
-      console.log(response.data.tickets)
+      const response = await Client.get(`/users/${id}`)
       setTickets(response.data.tickets)
     }
     getTickets()
@@ -142,7 +142,7 @@ const UserTickets = ({ user }) => {
               </p>
 
               <Link
-                to={`/tickets/${ticket._id}/team/${ticket.team._id}`}
+                to={`/tickets/${ticket._id}/team/${ticket.team?._id}`}
                 className="hidden rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-90shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:block dark:text-gray-200 dark:bg-gray-400/10"
               >
                 View ticket<span className="sr-only">, {ticket.name}</span>
