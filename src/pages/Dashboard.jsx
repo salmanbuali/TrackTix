@@ -7,8 +7,8 @@ import PieChart from '../components/PieChart'
 
 const Dashboard = () => {
   const { teamId } = useParams()
-  const [team, setTeam] = useState({})
-  const [tickets, setTickets] = useState([])
+  const [team, setTeam] = useState(null)
+  const [tickets, setTickets] = useState(null)
 
   useEffect(() => {
     const getTeam = async () => {
@@ -28,7 +28,7 @@ const Dashboard = () => {
         </div>
 
         <div className="w-1/3">
-          <PieChart />
+          {team && tickets ? <PieChart team={team} tickets={tickets} /> : null}
         </div>
       </div>
 
@@ -38,6 +38,5 @@ const Dashboard = () => {
     </div>
   )
 }
-
 
 export default Dashboard
