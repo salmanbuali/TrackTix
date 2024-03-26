@@ -1,6 +1,6 @@
 import Client from "../services/api"
 import { useState, useEffect, useRef } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
 import InviteMember from "../components/InviteMember"
 import Members from "../components/Members"
@@ -10,16 +10,19 @@ import {
   UserGroupIcon,
   CodeBracketSquareIcon,
   PlusIcon,
+  ArrowLeftStartOnRectangleIcon,
+  ChartPieIcon,
 } from "@heroicons/react/24/solid"
 
 const ViewTeam = ({ user }) => {
   let { id } = useParams()
+  let navigate = useNavigate()
   const [team, setTeam] = useState({})
   const [viewMembers, setViewMembers] = useState(false)
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
   const [manager, setManager] = useState(false)
-  const [roleAdded, setRoleAdded] = useState(false)
+  const [reload, setReload] = useState(false)
 
   useEffect(() => {
     const getTeam = async () => {
@@ -31,7 +34,7 @@ const ViewTeam = ({ user }) => {
       }
     }
     getTeam()
-  }, [roleAdded])
+  }, [reload])
 
   const toggleView = (view) => {
     if (view === "m") {
@@ -39,6 +42,11 @@ const ViewTeam = ({ user }) => {
     } else {
       setViewMembers(false)
     }
+  }
+
+  const leave = async () => {
+    await Client.put(`/teams/${id}/removemember/${user?.id}`)
+    navigate("/teams")
   }
 
   return (
@@ -104,6 +112,28 @@ const ViewTeam = ({ user }) => {
             Create Ticket
           </button>
         </Link>
+
+        {manager && (
+          <button
+            type="button"
+            className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-indigo-400 hover:text-white-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+            onClick={() => navigate(`/dashboard/${id}`)}
+          >
+            <ChartPieIcon className="w-5 h-5" />
+            Dashboard
+          </button>
+        )}
+
+        {!manager && (
+          <button
+            type="button"
+            className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-red-500 hover:text-white-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+            onClick={leave}
+          >
+            <ArrowLeftStartOnRectangleIcon className="w-5 h-5" />
+            Leave
+          </button>
+        )}
       </div>
 
       {viewMembers && (
@@ -111,7 +141,7 @@ const ViewTeam = ({ user }) => {
           members={team?.members}
           teamId={id}
           manager={manager}
-          setRoleAdded={setRoleAdded}
+          setReload={setReload}
         />
       )}
       {!viewMembers && (

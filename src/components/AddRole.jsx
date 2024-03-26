@@ -3,7 +3,15 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import Client from '../services/api'
 
-const AddRole = ({ teamId, member, open, setOpen, cancelButtonRef, setUpdate, setRoleAdded }) => {
+const AddRole = ({
+  teamId,
+  member,
+  open,
+  setOpen,
+  cancelButtonRef,
+  setUpdate,
+  setReload
+}) => {
   const name = useRef('')
 
   const handleSubmit = async (e) => {
@@ -16,7 +24,7 @@ const AddRole = ({ teamId, member, open, setOpen, cancelButtonRef, setUpdate, se
     e.target.reset()
     setOpen(false)
     setUpdate(true)
-    setRoleAdded(prev => !prev)
+    setReload((prev) => !prev)
   }
   return (
     <div>
