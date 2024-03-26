@@ -1,47 +1,25 @@
 import { DonutChart, Legend } from '@tremor/react'
 
-const PieChart = () => {
-  const datahero = [
-    {
-      name: 'New York',
-      value: 9800
-    },
-    {
-      name: 'London',
-      value: 4567
-    },
-    {
-      name: 'Hong Kong',
-      value: 3908
-    },
-    {
-      name: 'San Francisco',
-      value: 2400
-    },
-    {
-      name: 'Singapore',
-      value: 2174
-    },
-    {
-      name: 'Bahrain',
-      value: 1398
-    }
-  ]
+const PieChart = ({ team, tickets }) => {
+  let data = team?.members.map((member) => ({
+    name: member.name,
+    value: 0
+  }))
+
+  const completed = tickets?.filter((ticket) => ticket.status === 'Complete')
+  completed?.forEach((ticket) => {
+    const memberIndex = data.findIndex(
+      (member) => member.name === ticket.solvedBy.name
+    )
+    data[memberIndex].value += 1
+  })
+
+  const categories = data?.map((member) => member.name)
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <DonutChart data={datahero} variant="pie" />
-      <Legend
-        categories={[
-          'New York',
-          'London',
-          'Hong Kong',
-          'San Francisco',
-          'Singapore',
-          'Bahrain'
-        ]}
-        className="max-w-xs"
-      />
+      <DonutChart data={data} variant="pie" />
+      <Legend categories={categories} className="max-w-xs" />
     </div>
   )
 }
