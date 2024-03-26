@@ -141,6 +141,7 @@ const ViewTeam = ({ user }) => {
           teamId={id}
           manager={manager}
           setReload={setReload}
+          user={user}
         />
       )}
       {!viewMembers && (

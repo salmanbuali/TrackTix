@@ -178,7 +178,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
                 View ticket<span className="sr-only">, {ticket.name}</span>
               </Link>
               {
-                /* {ticket.solvedBy && */ <Menu
+                 !ticket.solvedBy && <Menu
                   as="div"
                   className="relative flex-none"
                 >

@@ -39,7 +39,7 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                   <p>&nbsp; TrackTix</p>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-3">
                     {user && (
                       <Link
                         to="/teams"
