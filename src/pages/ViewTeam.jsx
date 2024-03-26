@@ -21,7 +21,7 @@ const ViewTeam = ({ user }) => {
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
   const [manager, setManager] = useState(false)
-  const [roleAdded, setRoleAdded] = useState(false)
+  const [reload, setReload] = useState(false)
 
   useEffect(() => {
     const getTeam = async () => {
@@ -32,7 +32,7 @@ const ViewTeam = ({ user }) => {
       }
     }
     getTeam()
-  }, [roleAdded])
+  }, [reload])
 
   const toggleView = (view) => {
     if (view === 'm') {
@@ -128,7 +128,7 @@ const ViewTeam = ({ user }) => {
           members={team?.members}
           teamId={id}
           manager={manager}
-          setRoleAdded={setRoleAdded}
+          setReload={setReload}
         />
       )}
       {!viewMembers && (

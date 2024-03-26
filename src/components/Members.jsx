@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Members = ({ members, teamId, manager, setRoleAdded }) => {
+const Members = ({ members, teamId, manager, setReload }) => {
   const [update, setUpdate] = useState(false)
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
@@ -19,13 +19,15 @@ const Members = ({ members, teamId, manager, setRoleAdded }) => {
   }, [update])
 
   const removeRoles = async (id) => {
-    const res = await Client.delete(`/teams/${teamId}/removeroles/${id}`)
-    setUpdate(true)
+    await Client.delete(`/teams/${teamId}/removeroles/${id}`)
+    // setUpdate(true)
+    setReload((prev) => !prev)
   }
 
   const removeMember = async (id) => {
     await Client.put(`/teams/${teamId}/removemember/${id}`)
-    setUpdate(true)
+    // setUpdate(true)
+    setReload((prev) => !prev)
   }
   return (
     <>
@@ -36,7 +38,7 @@ const Members = ({ members, teamId, manager, setRoleAdded }) => {
         setUpdate={setUpdate}
         member={addrolememberId.current}
         teamId={teamId}
-        setRoleAdded={setRoleAdded}
+        setReload={setReload}
       />
 
       <ul
