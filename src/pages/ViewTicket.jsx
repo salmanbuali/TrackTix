@@ -163,13 +163,17 @@ const ViewTicket = ({ user }) => {
                     {moment(ticket.createdAt).format('MMMM DD,  YYYY')}
                   </dd>
                 </div>
-                 <div className="mt-2 sm:mt-0 sm:pl-4">
-                 {ticket.due && <><dt className="inline text-gray-500 font-semibold dark:text-gray-50">
-                    Due on&nbsp;
-                  </dt>
-                  <dd className="inline text-gray-700 dark:text-gray-300">
-                    {moment(ticket.due).format('MMMM DD,  YYYY')}
-                  </dd> </>}
+                <div className="mt-2 sm:mt-0 sm:pl-4">
+                  {ticket.due && (
+                    <>
+                      <dt className="inline text-gray-500 font-semibold dark:text-gray-50">
+                        Due on&nbsp;
+                      </dt>
+                      <dd className="inline text-gray-700 dark:text-gray-300">
+                        {moment(ticket.due).format('MMMM DD,  YYYY')}
+                      </dd>{' '}
+                    </>
+                  )}
                 </div>
 
                 <div className="mt-6 border-t border-gray-900/5 pt-6 sm:pr-4">
@@ -188,17 +192,18 @@ const ViewTicket = ({ user }) => {
                   <ArrowUturnLeftIcon className="size-5" />
                   Team
                 </button>
-                {!ticket.solvedBy && ticket.member
-                  .map((member) => member._id)
-                  .includes(user.id) && (
-                  <button
-                    onClick={leave}
-                    className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
-                  >
-                    <ArrowLeftStartOnRectangleIcon className="size-5" />
-                    Leave
-                  </button>
-                )}
+                {!ticket.solvedBy &&
+                  ticket.member
+                    .map((member) => member._id)
+                    .includes(user.id) && (
+                    <button
+                      onClick={leave}
+                      className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                    >
+                      <ArrowLeftStartOnRectangleIcon className="size-5" />
+                      Leave
+                    </button>
+                  )}
                 {ticket.status !== 'Complete' &&
                   ticket.member
                     .map((member) => member._id)
@@ -243,7 +248,7 @@ const ViewTicket = ({ user }) => {
                                 deleteComment(comment._id)
                               }}
                               type="button"
-                              className="rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                              className="rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 size-6"
                             >
                               {' '}
                               <XMarkIcon
