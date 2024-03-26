@@ -13,7 +13,7 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
       setNotifications(response.data)
     }
     if (user) getNotifications()
-  }, [reload])
+  }, [reload, open])
 
   const remove = async (id, i) => {
     await Client.delete(`/notifications/${id}`)
@@ -71,7 +71,7 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
                           {notifications?.map((noti, i) => (
                             <li
                               key={i}
-                              className="flex justify-between px-5 my-1"
+                              className="flex   text-sm text-left justify-between px-5 my-1"
                             >
                               {noti.content}{' '}
                               <button
@@ -79,7 +79,7 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
                                   remove(noti._id, i)
                                 }}
                                 type="button"
-                                className="rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                className="rounded-full bg-gray-600 p-1 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 size-6"
                               >
                                 {' '}
                                 <XMarkIcon
