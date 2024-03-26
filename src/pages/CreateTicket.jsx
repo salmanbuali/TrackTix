@@ -1,15 +1,15 @@
-import { useNavigate, useParams } from 'react-router-dom'
-import { useRef } from 'react'
-import Client from '../services/api'
+import { useNavigate, useParams } from "react-router-dom"
+import { useRef } from "react"
+import Client from "../services/api"
 const CreateTicket = ({ user }) => {
   let navigate = useNavigate()
   let { id } = useParams()
   const formRef = {
     subject: useRef(null),
     content: useRef(null),
-    priority: useRef('Urgent'),
+    priority: useRef("Urgent"),
     attachments: useRef(null),
-    due: useRef(null)
+    due: useRef(null),
   }
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -17,13 +17,18 @@ const CreateTicket = ({ user }) => {
       subject: formRef.subject.current.value,
       content: formRef.content.current.value,
       priority: formRef.priority.current.value,
-      attachments: formRef.attachments.current.value,
+      attachments: formRef.attachments.current.files,
       due: formRef.due.current.value,
       createdBy: user?.id,
-      team: id
+      team: id,
     }
-    await Client.post(`/tickets/team/${id}`, ticket)
-    navigate(`/teams/${id}`)
+    console.log(ticket.attachments)
+    await Client.post(`/tickets/team/${id}`, ticket, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    // navigate(`/teams/${id}`)
   }
   return (
     <div>
@@ -89,10 +94,12 @@ const CreateTicket = ({ user }) => {
               Attachments
             </label>
             <input
-              type="text"
+              type="file"
               id="attachments"
+              name="attachments[]"
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required
+              multiple="multiple"
               ref={formRef.attachments}
             />
           </div>
