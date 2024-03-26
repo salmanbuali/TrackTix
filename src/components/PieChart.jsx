@@ -17,9 +17,9 @@ const PieChart = ({ team, tickets }) => {
   const categories = data?.map((member) => member.name)
 
   return (
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center gap-5">
       <DonutChart data={data} variant="pie" />
-      <Legend categories={categories} className="max-w-xs" />
+      <Legend categories={categories} />
     </div>
   )
 }
