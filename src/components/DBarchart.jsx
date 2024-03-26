@@ -41,9 +41,9 @@ const DBarChart = ({ tickets }) => {
         'Number of complete tickets',
         'Number of pending tickets'
       ]}
-      colors={barColors} // Assign colors array
-      yAxisWidth={48}
-      onValueChange={(v) => console.log(v)}
+      colors={barColors}
+      yAxisWidth={78}
+      allowDecimals={false}
     />
   )
 }
