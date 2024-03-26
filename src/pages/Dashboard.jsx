@@ -2,6 +2,8 @@ import { useParams } from 'react-router-dom'
 import DBarChart from '../components/DBarchart'
 import { useEffect, useState } from 'react'
 import Client from '../services/api'
+import DataBarChart from '../components/DataBarChart'
+import PieChart from '../components/PieChart'
 
 const Dashboard = () => {
   const { teamId } = useParams()
@@ -19,11 +21,23 @@ const Dashboard = () => {
   }, [])
 
   return (
-    <div>
-      hi
-      <DBarChart tickets={tickets} />
+    <div className="flex justify-center flex-col">
+      <div className="flex flex-row">
+        <div className="w-1/3">
+          <DBarChart tickets={tickets} />
+        </div>
+
+        <div className="w-1/3">
+          <PieChart />
+        </div>
+      </div>
+
+      <div>
+        <DataBarChart />
+      </div>
     </div>
   )
 }
+
 
 export default Dashboard
