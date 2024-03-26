@@ -19,6 +19,11 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
     await Client.delete(`/notifications/${id}`)
     setReload((prev) => !prev)
   }
+
+  const removeAll = async (id) => {
+    await Client.delete(`/notifications/user/${id}`)
+    setReload((prev) => !prev)
+  }
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
@@ -62,7 +67,7 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
                         className="flex items-center text-base font-semibold leading-6 text-gray-900"
                       >
                         <span className="flex-grow ml-10">Notifications</span>
-                        <button type="button" className="mr-2">
+                        <button type="button" className="mr-2" onClick={()=>{removeAll(user.id)}}>
                           Clear
                         </button>
                       </Dialog.Title>

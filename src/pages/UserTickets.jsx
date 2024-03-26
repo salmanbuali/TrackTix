@@ -68,7 +68,7 @@ const UserTickets = () => {
   }
 
   return tickets ? (
-    <div className="w-full mt-5 m-auto">
+    <div className="mt-5 m-auto w-2/3">
       <div className="max-w-sm mx-auto">
         <select
           onChange={sort}

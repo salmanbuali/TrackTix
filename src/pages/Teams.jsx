@@ -16,7 +16,7 @@ const Teams = ({ user }) => {
       setTeams(response.data)
     }
     getTeams()
-  }, [checkInv])
+  }, [checkInv, open])
 
   return teams.length ? (
     <div className="w-3/4 m-auto">

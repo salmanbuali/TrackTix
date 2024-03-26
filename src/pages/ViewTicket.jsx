@@ -221,7 +221,7 @@ const ViewTicket = ({ user }) => {
 
             <div className="lg:col-start-3">
               {/* Comment feed */}
-              <h2 className="text-sm font-semibold leading-6 text-gray-900">
+              <h2 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
                 Comments
               </h2>
 
