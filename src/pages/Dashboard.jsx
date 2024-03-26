@@ -22,8 +22,8 @@ const Dashboard = () => {
 
   return (
     <div className="flex justify-center flex-col">
-      <div className="flex flex-row">
-        <div className="w-1/3">
+      <div className="flex flex-row items-center bg-gray-200 dark:bg-transparent border border-gray-700 rounded-3xl w-4/5 m-auto gap-10 p-3">
+        <div className="w-1/2">
           <DBarChart tickets={tickets} />
         </div>
 
@@ -32,12 +32,11 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div>
-        <DataBarChart />
+      <div className="mt-10 border border-gray-700 bg-gray-200 dark:bg-transparent rounded-3xl w-4/5 m-auto p-3">
+        <DataBarChart tickets={tickets} />
       </div>
     </div>
   )
 }
-
 
 export default Dashboard
