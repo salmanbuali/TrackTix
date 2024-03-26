@@ -14,6 +14,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import EditProfile from './pages/EditProfile'
 import UserTickets from './pages/UserTickets'
+import Dashboard from './pages/Dashboard'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -63,6 +64,7 @@ function App() {
           <Route path="/login" element={<Login setUser={setUser} />}></Route>
           <Route path="/teams" element={<Teams user={user} />}></Route>
           <Route path="/teams/:id" element={<ViewTeam user={user} />}></Route>
+          <Route path="/dashboard/:teamId" element={<Dashboard user={user} />}></Route>
           <Route
             path="/tickets/:id/team/:teamId"
             element={<ViewTicket user={user} />}
