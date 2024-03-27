@@ -43,7 +43,7 @@ const ViewTicket = ({ user }) => {
     }
     getTicket()
     setUpdate(false)
-  }, [update])
+  }, [update, id])
 
   const addComment = async (e) => {
     e.preventDefault()

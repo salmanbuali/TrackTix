@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { BellAlertIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import Client from '../services/api'
+import { Link } from 'react-router-dom'
 
 const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
   const [notifications, setNotifications] = useState([])
@@ -56,7 +57,6 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-
                 <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-6">
                   <div>
                     <div className="mt-3 text-center ove sm:mt-5">
@@ -81,13 +81,19 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
 
                       <div className="mt-5">
                         <ul className="h-28 overflow-y-scroll">
-
                           {notifications?.map((noti, i) => (
                             <li
                               key={i}
                               className="flex   text-sm text-left justify-between px-5 my-1"
                             >
-                              {noti.content}{' '}
+                              <Link
+                                to={`/tickets/${noti.ticket._id}/team/${noti.team._id}`}
+                                onClick={() => {
+                                  setOpen((prev) => !prev)
+                                }}
+                              >
+                                {noti.content}{' '}
+                              </Link>
                               <button
                                 onClick={() => {
                                   remove(noti._id, i)
