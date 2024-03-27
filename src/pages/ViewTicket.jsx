@@ -225,7 +225,7 @@ const ViewTicket = ({ user }) => {
                 Comments
               </h2>
 
-              <ul role="list" className="mt-6 space-y-6 h-64 overflow-y-scroll">
+              <ul role="list" className="mt-6 space-y-6 max-h-64 overflow-y-scroll">
                 {ticket.comments.map((comment) => (
                   <li key={comment.id} className="relative flex gap-x-4">
                     <>

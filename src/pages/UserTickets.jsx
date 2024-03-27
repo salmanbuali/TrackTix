@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import Client from '../services/api'
 import moment from 'moment'
 import { useNavigate, Link, useParams } from 'react-router-dom'
+import { Pagination } from 'flowbite-react'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -12,6 +13,13 @@ const UserTickets = () => {
   const [tickets, setTickets] = useState()
   const [sorted, setSorted] = useState(false)
   const orderRef = useRef(null)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageIndex, setPageIndex] = useState(0)
+  const onPageChange = (page) => {
+    setCurrentPage(page)
+    setPageIndex((page - 1) * 6)
+  }
+
   let navigate = useNavigate()
   // don't delete
   const statuses = {
@@ -86,7 +94,7 @@ const UserTickets = () => {
         </select>
       </div>
       <ul role="list" className="divide-y divide-gray-500 m-auto">
-        {tickets?.map((ticket) => (
+        {tickets?.slice(pageIndex, pageIndex + 6).map((ticket) => (
           <li
             key={ticket._id}
             className="flex items-center justify-between gap-x-6 py-5"
@@ -151,6 +159,14 @@ const UserTickets = () => {
           </li>
         ))}
       </ul>
+      <div className="flex overflow-x-auto my-3 sm:justify-center">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(tickets.length / 6)}
+          onPageChange={onPageChange}
+          showIcons
+        />
+      </div>
     </div>
   ) : (
     <></>
