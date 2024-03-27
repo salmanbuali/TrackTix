@@ -1,10 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom'
 import { useRef, useState } from 'react'
 import Client from '../services/api'
+import { Spinner } from 'flowbite-react'
+import { FileInput, Label } from 'flowbite-react'
+
 const CreateTicket = ({ user }) => {
   let navigate = useNavigate()
   let { id } = useParams()
-  // const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const formRef = {
     subject: useRef(null),
@@ -19,16 +22,18 @@ const CreateTicket = ({ user }) => {
       subject: formRef.subject.current.value,
       content: formRef.content.current.value,
       priority: formRef.priority.current.value,
-      attachments: formRef.attachments.current.files, 
+      attachments: formRef.attachments.current.files,
       due: formRef.due.current.value,
       createdBy: user?.id,
       team: id
     }
+    setLoading(true)
     await Client.post(`/tickets/team/${id}`, ticket, {
       headers: {
-        "Content-Type": "multipart/form-data",
-      },
+        'Content-Type': 'multipart/form-data'
+      }
     })
+
     navigate(`/teams/${id}`)
   }
   return (
@@ -87,22 +92,19 @@ const CreateTicket = ({ user }) => {
               <option value="Low">Low</option>
             </select>
           </div>
+
           <div className="mb-5">
-            <label
-              htmlFor="attachments"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Attachments
-            </label>
-            <input
+            <Label htmlFor="attachments" value="Upload file" />
+
+            <FileInput
               type="file"
               id="attachments"
-              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               name="attachments[]"
               multiple="multiple"
               ref={formRef.attachments}
             />
           </div>
+
           <div className="mb-5">
             <label
               htmlFor="due"
@@ -117,12 +119,16 @@ const CreateTicket = ({ user }) => {
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
           </div>
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-          >
-            Create
-          </button>
+          <div className="flex gap-3">
+            <button
+              type="submit"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Create
+            </button>
+
+            {loading && <Spinner className=" size-10" />}
+          </div>
         </form>
       </div>
     </div>

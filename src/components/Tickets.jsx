@@ -124,11 +124,11 @@ const Tickets = ({ teamId, user, members, manager }) => {
           <option value="d">Due Date</option>
         </select>
       </div>
-      <ul role="list" className="divide-y divide-gray-500 m-auto">
+      <ul role="list" className=" m-auto">
         {tickets?.slice(pageIndex, pageIndex + 6).map((ticket) => (
           <li
             key={ticket._id}
-            className="flex items-center justify-between gap-x-6 py-5"
+            className="flex items-center bg-neutral-50 my-2 rounded-2xl justify-between gap-x-6 p-5 shadow-md"
           >
             <div className="min-w-0">
               <div className="flex items-start gap-x-3">
