@@ -23,26 +23,34 @@ const Register = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    let tempInvalid
+    let tempPassInvalid
     if (
       !formRef.email.current.value.match(
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       )
     ) {
       setInvalid(true)
+      tempInvalid = true
     } else {
       setInvalid(false)
+      tempInvalid = false
     }
 
     if (
-      formRef.password.current.value !== formRef.confirmPassword.current.value
+      formRef.password.current.value !==
+        formRef.confirmPassword.current.value ||
+      formRef.password.current.value.match(/^\s*$/)
     ) {
       formRef.password.current.value = ''
       formRef.confirmPassword.current.value = ''
       setInvalidPassword(true)
+      tempPassInvalid = true
     } else {
       setInvalidPassword(false)
+      tempPassInvalid = false
     }
-    if (!invalid && !invalidPassword) {
+    if (!tempInvalid && !tempPassInvalid) {
       await RegisterUser({
         name: formRef.name.current.value,
         email: formRef.email.current.value,
