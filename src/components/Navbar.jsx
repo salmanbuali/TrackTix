@@ -1,6 +1,11 @@
 import { Fragment, useState, useRef } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { BellIcon, MoonIcon, UserGroupIcon } from '@heroicons/react/24/outline'
+import {
+  BellIcon,
+  MoonIcon,
+  UserGroupIcon,
+  UserIcon
+} from '@heroicons/react/24/outline'
 import { Link, useNavigate } from 'react-router-dom'
 import Notifications from './Notifications'
 
@@ -31,12 +36,14 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0 text-white flex items-center">
-                <Link to='/' className='flex items-center'><img
-                    src="/favicon.ico"
-                    alt="logo"
-                    style={{ filter: 'invert(1)' }}
-                  />
-                  &nbsp; TrackTix</Link>
+                  <Link to="/" className="flex items-center">
+                    <img
+                      src="/favicon.ico"
+                      alt="logo"
+                      style={{ filter: 'invert(1)' }}
+                    />
+                    &nbsp; TrackTix
+                  </Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex items-center gap-3">
@@ -55,7 +62,7 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                         className="flex items-center rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                       >
                         <UserGroupIcon className="h-6 w-6 mr-1" />
-                        My tickets
+                        My Tickets
                       </Link>
                     )}
                   </div>
@@ -81,14 +88,16 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3">
                     <div>
-                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button className="relative flex rounded-full text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
 
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-user-icon-image_1187018.jpg"
-                          alt=""
-                        />
+                        {!user && <UserIcon className="size-6" />}
+                        {user && (
+                          <img
+                            src={user?.avatar}
+                            className="size-6 rounded-2xl"
+                          />
+                        )}
                       </Menu.Button>
                     </div>
                     <Transition
