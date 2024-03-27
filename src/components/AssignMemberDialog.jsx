@@ -75,7 +75,9 @@ const AssignMemberDialog = ({
                             ref={memberRef}
                           >
                             {availableMembers.map((member) => (
-                              <option value={member._id}>{member.name}</option>
+                              <option key={member._id} value={member._id}>
+                                {member.name}
+                              </option>
                             ))}
                           </select>
                           <button
