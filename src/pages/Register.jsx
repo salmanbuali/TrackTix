@@ -7,11 +7,12 @@ import {
 import { Link } from 'react-router-dom'
 import { RegisterUser } from '../services/Auth'
 import { useNavigate } from 'react-router-dom'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const Register = () => {
   let navigate = useNavigate()
-  let invalid = false
+  const [invalid, setInvalid] = useState(false)
+  const [invalidPassword, setInvalidPassword] = useState(false)
   const formRef = {
     name: useRef(null),
     email: useRef(null),
@@ -23,8 +24,25 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     if (
-      formRef.password.current.value === formRef.confirmPassword.current.value
+      !formRef.email.current.value.match(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      )
     ) {
+      setInvalid(true)
+    } else {
+      setInvalid(false)
+    }
+
+    if (
+      formRef.password.current.value !== formRef.confirmPassword.current.value
+    ) {
+      formRef.password.current.value = ''
+      formRef.confirmPassword.current.value = ''
+      setInvalidPassword(true)
+    } else {
+      setInvalidPassword(false)
+    }
+    if (!invalid && !invalidPassword) {
       await RegisterUser({
         name: formRef.name.current.value,
         email: formRef.email.current.value,
@@ -32,8 +50,6 @@ const Register = () => {
         phone: formRef.phone.current.value
       })
       navigate('/login')
-    } else {
-      invalid = true
     }
   }
   return (
@@ -102,7 +118,11 @@ const Register = () => {
               type="password"
               name="password"
               id="password"
-              className="block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
+              className={`block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white ${
+                invalidPassword
+                  ? 'text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-red-500'
+                  : ''
+              }`}
               placeholder="Password"
               ref={formRef.password}
             />
@@ -123,8 +143,14 @@ const Register = () => {
               type="password"
               name="passwordCheck"
               id="passwordCheck"
-              className="block text-sm w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white"
-              placeholder="Confirm your password"
+              className={`block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-gray-950 dark:text-white ${
+                invalidPassword
+                  ? 'text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-red-500'
+                  : ''
+              }`}
+              placeholder={` ${
+                invalidPassword ? 'Passwords Do Not Match' : 'Confirm Password'
+              }`}
               ref={formRef.confirmPassword}
             />
           </div>
