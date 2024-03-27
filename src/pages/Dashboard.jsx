@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Client from '../services/api'
 import DataBarChart from '../components/DataBarChart'
 import PieChart from '../components/PieChart'
+import ProcessChart from '../components/ProcessChart'
 
 const Dashboard = () => {
   const { teamId } = useParams()
@@ -31,6 +32,9 @@ const Dashboard = () => {
             Tickets closed per member
           </div>
           {team && tickets ? <PieChart team={team} tickets={tickets} /> : null}
+          {team && tickets ? (
+            <ProcessChart team={team} tickets={tickets} />
+          ) : null}
         </div>
       </div>
       <div className="mt-5 w-4/5 m-auto p-3">
