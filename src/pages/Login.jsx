@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom"
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/20/solid"
 import { LogInUser } from "../services/Auth"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 const Login = ({ setUser }) => {
   let navigate = useNavigate()
-  let invalid = false
+  const [invalid, setInvalid] = useState(false)
   const formRef = {
     email: useRef(null),
     password: useRef(null),
@@ -12,6 +12,16 @@ const Login = ({ setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (
+      !formRef.email.current.value.match(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      )
+    ) {
+      setInvalid(true)
+    } else {
+      setInvalid(false)
+    }
+
     const payload = await LogInUser({
       email: formRef.email.current.value,
       password: formRef.password.current.value,
@@ -20,7 +30,7 @@ const Login = ({ setUser }) => {
     if (payload) {
       navigate(`/teams`)
     } else {
-      invalid = true
+      formRef.password.current.value = ""
     }
   }
 

@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { BellAlertIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 import Client from '../services/api'
+import { Link } from 'react-router-dom'
 
 const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
   const [notifications, setNotifications] = useState([])
@@ -17,6 +18,11 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
 
   const remove = async (id, i) => {
     await Client.delete(`/notifications/${id}`)
+    setReload((prev) => !prev)
+  }
+
+  const removeAll = async (id) => {
+    await Client.delete(`/notifications/user/${id}`)
     setReload((prev) => !prev)
   }
   return (
@@ -51,9 +57,9 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-6">
+                <Dialog.Panel className="relative transform rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-xl sm:p-6">
                   <div>
-                    <div className="mt-3 text-center sm:mt-5">
+                    <div className="mt-3 text-center ove sm:mt-5">
                       <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-100">
                         <BellAlertIcon className="h-6 w-6 text-indigo-600" />
                       </div>
@@ -62,18 +68,32 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
                         className="flex items-center text-base font-semibold leading-6 text-gray-900"
                       >
                         <span className="flex-grow ml-10">Notifications</span>
-                        <button type="button" className="mr-2">
+                        <button
+                          type="button"
+                          className="mr-2"
+                          onClick={() => {
+                            removeAll(user.id)
+                          }}
+                        >
                           Clear
                         </button>
                       </Dialog.Title>
+
                       <div className="mt-5">
-                        <ul>
+                        <ul className="h-28 overflow-y-scroll">
                           {notifications?.map((noti, i) => (
                             <li
                               key={i}
                               className="flex   text-sm text-left justify-between px-5 my-1"
                             >
-                              {noti.content}{' '}
+                              <Link
+                                to={`/tickets/${noti.ticket._id}/team/${noti.team._id}`}
+                                onClick={() => {
+                                  setOpen((prev) => !prev)
+                                }}
+                              >
+                                {noti.content}{' '}
+                              </Link>
                               <button
                                 onClick={() => {
                                   remove(noti._id, i)

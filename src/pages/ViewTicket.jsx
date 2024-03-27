@@ -43,7 +43,7 @@ const ViewTicket = ({ user }) => {
     }
     getTicket()
     setUpdate(false)
-  }, [update])
+  }, [update, id])
 
   const addComment = async (e) => {
     e.preventDefault()
@@ -82,7 +82,7 @@ const ViewTicket = ({ user }) => {
   return (
     ticket && (
       <div className="flex flex-col justify-center items-center w-full m-auto">
-        <div className="mx-auto w-3/4 px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mx-auto w-3/4 px-4 py-4 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div className="lg:col-start-3 lg:row-end-1">
               <div className="rounded-lg bg-gray-50 dark:bg-slate-800 shadow-sm ring-1 ring-gray-900/5">
@@ -210,7 +210,7 @@ const ViewTicket = ({ user }) => {
                     .includes(user.id) && (
                     <button
                       onClick={solved}
-                      className="mt-12 rounded-lg px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 bg-green-600 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                      className="mt-12 rounded-lg px-3 py-2 text-sm font-medium text-gray-100 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-green-400 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 bg-green-600 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-green-800 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
                     >
                       <CheckIcon className="size-5" />
                       Solved
@@ -221,11 +221,11 @@ const ViewTicket = ({ user }) => {
 
             <div className="lg:col-start-3">
               {/* Comment feed */}
-              <h2 className="text-sm font-semibold leading-6 text-gray-900">
+              <h2 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
                 Comments
               </h2>
 
-              <ul role="list" className="mt-6 space-y-6">
+              <ul role="list" className="mt-6 space-y-6 max-h-64 overflow-y-scroll">
                 {ticket.comments.map((comment) => (
                   <li key={comment.id} className="relative flex gap-x-4">
                     <>
@@ -234,7 +234,7 @@ const ViewTicket = ({ user }) => {
                         alt=""
                         className="relative mt-3 h-6 w-6 flex-none rounded-full bg-gray-50"
                       />
-                      <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200">
+                      <div className="flex-auto rounded-md p-3 ring-1 ring-inset ring-gray-200 w-5">
                         <div className="flex justify-between gap-x-4">
                           <div className="py-0.5 text-xs leading-5 text-gray-500">
                             <span className="font-medium text-gray-900 dark:text-gray-100">
@@ -258,7 +258,7 @@ const ViewTicket = ({ user }) => {
                             </button>
                           )}
                         </div>
-                        <p className="text-xs leading-6 text-gray-500 dark:text-white text-wrap">
+                        <p className="text-xs leading-6 text-gray-500 dark:text-white overflow-auto ">
                           {comment.content}
                         </p>
                       </div>

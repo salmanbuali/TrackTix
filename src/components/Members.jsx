@@ -8,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
 
-const Members = ({ members, teamId, manager, setReload }) => {
+const Members = ({ members, teamId, manager, setReload, user }) => {
   const [update, setUpdate] = useState(false)
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
@@ -120,7 +120,7 @@ const Members = ({ members, teamId, manager, setReload }) => {
                           </a>
                         )}
                       </Menu.Item>
-                      <Menu.Item>
+                      {(user.id !== member._id) && <Menu.Item>
                         {({ active }) => (
                           <a
                             onClick={() => {
@@ -134,7 +134,7 @@ const Members = ({ members, teamId, manager, setReload }) => {
                             Remove Member
                           </a>
                         )}
-                      </Menu.Item>
+                      </Menu.Item>}
                     </Menu.Items>
                   </Transition>
                 </Menu>

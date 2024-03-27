@@ -5,6 +5,7 @@ import { EllipsisVerticalIcon } from '@heroicons/react/20/solid'
 import AssignMemberDialog from './AssignMemberDialog'
 import Client from '../services/api'
 import moment from 'moment'
+import { Pagination } from 'flowbite-react'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -18,6 +19,14 @@ const Tickets = ({ teamId, user, members, manager }) => {
   const orderRef = useRef(null)
   const ticketToAssign = useRef(null)
   const [open, setOpen] = useState(false)
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageIndex, setPageIndex] = useState(0)
+
+  const onPageChange = (page) => {
+    setCurrentPage(page)
+    setPageIndex((page - 1) * 6)
+  }
 
   let navigate = useNavigate()
   // don't delete
@@ -50,7 +59,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
 
   const assign = async (ticketId) => {
     await Client.put(`/tickets/${ticketId}/assign`, { member: user.id })
-    setUpdate(true)
+    setUpdate((prev) => !prev)
   }
 
   const edit = (ticketId) => {
@@ -116,7 +125,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
         </select>
       </div>
       <ul role="list" className="divide-y divide-gray-500 m-auto">
-        {tickets?.map((ticket) => (
+        {tickets?.slice(pageIndex, pageIndex + 6).map((ticket) => (
           <li
             key={ticket._id}
             className="flex items-center justify-between gap-x-6 py-5"
@@ -162,6 +171,15 @@ const Tickets = ({ teamId, user, members, manager }) => {
               </div>
             </div>
             <div className="flex flex-none items-center gap-x-4">
+              <div className="flex -space-x-2 overflow-hidden p-1">
+                {ticket.member.map((member) => (
+                  <img
+                    src={member.avatar}
+                    alt="avatar"
+                    className="inline-block h-8 w-8 m-1 rounded-full ring-1 ring-gray-400"
+                  />
+                ))}
+              </div>
               <p
                 className={classNames(
                   prios[ticket.priority],
@@ -177,11 +195,8 @@ const Tickets = ({ teamId, user, members, manager }) => {
               >
                 View ticket<span className="sr-only">, {ticket.name}</span>
               </Link>
-              {
-                /* {ticket.solvedBy && */ <Menu
-                  as="div"
-                  className="relative flex-none"
-                >
+              {!ticket.solvedBy && (
+                <Menu as="div" className="relative flex-none">
                   <Menu.Button className="-m-2.5 block p-2.5 text-gray-500 hover:text-gray-900">
                     <span className="sr-only">Open options</span>
                     <EllipsisVerticalIcon
@@ -258,11 +273,19 @@ const Tickets = ({ teamId, user, members, manager }) => {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-              }
+              )}
             </div>
           </li>
         ))}
       </ul>
+      <div className="flex overflow-x-auto my-3 sm:justify-center">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(tickets.length / 6)}
+          onPageChange={onPageChange}
+          showIcons
+        />
+      </div>
     </div>
   ) : (
     <></>

@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { EnvelopeIcon } from "@heroicons/react/24/outline"
 
@@ -12,10 +12,20 @@ const InviteMember = ({
   cancelButtonRef,
 }) => {
   const email = useRef("")
+  const [invalid, setInvalid] = useState(false)
 
   const invite = async () => {
     const teamMembers = members?.map((member) => member.email)
-    if (!teamMembers.includes(email.current.value)) {
+    if (
+      !email.current.value.match(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      )
+    ) {
+      setInvalid(true)
+    } else {
+      setInvalid(false)
+    }
+    if (!teamMembers.includes(email.current.value) && !invalid) {
       const invite = {
         sender: userId,
         member: email.current.value,
@@ -25,7 +35,9 @@ const InviteMember = ({
       email.current.value = ""
       setOpen(false)
     } else {
-      setOpen(false)
+      email.current.value = ""
+      setInvalid(true)
+      setOpen(true)
     }
   }
 
@@ -81,7 +93,16 @@ const InviteMember = ({
                           <input
                             type="email"
                             id="email"
-                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className={`bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+                              invalid
+                                ? "text-red-900 ring-1 ring-inset ring-red-300 placeholder:text-red-300 focus:ring-red-500"
+                                : ""
+                            }`}
+                            placeholder={` ${
+                              invalid
+                                ? "Not a valid email address"
+                                : "you@example.com"
+                            }`}
                             required
                             ref={email}
                           />
