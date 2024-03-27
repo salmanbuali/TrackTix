@@ -9,15 +9,20 @@ const CreateTeam = ({ user }) => {
   }
 
   let navigate = useNavigate()
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     const newTeam = {
       name: formRef.name.current.value,
       manager: user.id,
-      avatar: formRef.avatar.current.value
+      avatar: formRef.avatar.current.files[0],
     }
-    await Client.post(`/teams`, newTeam)
+    await Client.post(`/teams`, newTeam, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+
     navigate('/teams')
     e.target.reset()
   }
@@ -51,7 +56,8 @@ const CreateTeam = ({ user }) => {
             Team Avatar
           </label>
           <input
-            type="text"
+            name="avatar"
+            type="file"
             id="avatar"
             className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required
