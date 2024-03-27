@@ -22,13 +22,12 @@ const CreateTicket = ({ user }) => {
       createdBy: user?.id,
       team: id,
     }
-    console.log(ticket.attachments)
     await Client.post(`/tickets/team/${id}`, ticket, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     })
-    // navigate(`/teams/${id}`)
+    navigate(`/teams/${id}`)
   }
   return (
     <div>
