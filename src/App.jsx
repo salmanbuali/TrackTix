@@ -1,27 +1,27 @@
-import { Routes, Route } from 'react-router-dom'
-import { CheckSession } from './services/Auth'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import Teams from './pages/Teams'
-import { useState, useEffect } from 'react'
-import Navbar from './components/Navbar'
-import CreateTeam from './pages/CreateTeam'
-import ViewTeam from './pages/ViewTeam'
-import CreateTicket from './pages/CreateTicket'
-import ViewTicket from './pages/ViewTicket'
-import EditTicket from './pages/EditTicket'
-import Home from './pages/Home'
-import Profile from './pages/Profile'
-import EditProfile from './pages/EditProfile'
-import UserTickets from './pages/UserTickets'
-import Dashboard from './pages/Dashboard'
+import { Routes, Route } from "react-router-dom"
+import { CheckSession } from "./services/Auth"
+import Register from "./pages/Register"
+import Login from "./pages/Login"
+import Teams from "./pages/Teams"
+import { useState, useEffect } from "react"
+import Navbar from "./components/Navbar"
+import CreateTeam from "./pages/CreateTeam"
+import ViewTeam from "./pages/ViewTeam"
+import CreateTicket from "./pages/CreateTicket"
+import ViewTicket from "./pages/ViewTicket"
+import EditTicket from "./pages/EditTicket"
+import Home from "./pages/Home"
+import Profile from "./pages/Profile"
+import EditProfile from "./pages/EditProfile"
+import UserTickets from "./pages/UserTickets"
+import Dashboard from "./pages/Dashboard"
 
 function App() {
   const [user, setUser] = useState(null)
   const [darkMode, setDarkMode] = useState(false)
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem("token")
     if (token) {
       const checkTokenFunction = async () => {
         await checkToken()
@@ -44,7 +44,7 @@ function App() {
     localStorage.clear()
   }
   return (
-    <div className={`${darkMode && 'dark'}`}>
+    <div className={`${darkMode && "dark"}`}>
       <Navbar
         toggleDarkMode={toggleDarkMode}
         user={user}
@@ -64,7 +64,10 @@ function App() {
           <Route path="/login" element={<Login setUser={setUser} />}></Route>
           <Route path="/teams" element={<Teams user={user} />}></Route>
           <Route path="/teams/:id" element={<ViewTeam user={user} />}></Route>
-          <Route path="/dashboard/:teamId" element={<Dashboard user={user} />}></Route>
+          <Route
+            path="/dashboard/:teamId"
+            element={<Dashboard user={user} />}
+          ></Route>
           <Route
             path="/tickets/:id/team/:teamId"
             element={<ViewTicket user={user} />}
