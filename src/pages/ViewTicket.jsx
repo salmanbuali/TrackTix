@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import Client from '../services/api'
+import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import moment from 'moment'
 import {
@@ -8,7 +9,8 @@ import {
   ArrowUturnLeftIcon,
   ArrowLeftStartOnRectangleIcon,
   CheckIcon,
-  LinkIcon
+  LinkIcon,
+  DocumentArrowDownIcon
 } from '@heroicons/react/24/outline'
 
 function classNames(...classes) {
@@ -79,6 +81,23 @@ const ViewTicket = ({ user }) => {
     navigate(`/teams/${teamId}`)
   }
 
+  const download = async (file) => {
+    console.log(file)
+    await axios
+      .get(file.url, {
+        'Content-Type': 'multipart/form-data',
+        responseType: 'blob' // important
+      })
+      .then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', file.name)
+        document.body.appendChild(link)
+        link.click()
+      })
+  }
+
   return (
     ticket && (
       <div className="flex flex-col justify-center items-center w-full m-auto">
@@ -92,8 +111,21 @@ const ViewTicket = ({ user }) => {
                       <LinkIcon className="size-5" />
                       Attachments
                     </dt>
-                    {ticket.attachments.map((a) => (
-                      <p className="dark:text-white">{a}</p>
+                    {ticket.attachments.map((file) => (
+                      <p className="text-sm dark:text-white text-wrap flex gap-5 items-center justify-between p-2">
+                        {file.name}
+
+                        <button
+                          type="button"
+                          className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
+                          onClick={() => {
+                            download(file)
+                          }}
+                        >
+                          <DocumentArrowDownIcon className="size-5" />
+                          Download
+                        </button>
+                      </p>
                     ))}
                   </div>
                 </dl>
@@ -225,7 +257,10 @@ const ViewTicket = ({ user }) => {
                 Comments
               </h2>
 
-              <ul role="list" className="mt-6 space-y-6 h-64 overflow-y-scroll">
+              <ul
+                role="list"
+                className="mt-6 space-y-6 max-h-64 overflow-y-scroll"
+              >
                 {ticket.comments.map((comment) => (
                   <li key={comment.id} className="relative flex gap-x-4">
                     <>

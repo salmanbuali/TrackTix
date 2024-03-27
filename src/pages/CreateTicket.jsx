@@ -1,9 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import Client from '../services/api'
 const CreateTicket = ({ user }) => {
   let navigate = useNavigate()
   let { id } = useParams()
+  // const [loading, setLoading] = useState(false)
+
   const formRef = {
     subject: useRef(null),
     content: useRef(null),
@@ -17,12 +19,16 @@ const CreateTicket = ({ user }) => {
       subject: formRef.subject.current.value,
       content: formRef.content.current.value,
       priority: formRef.priority.current.value,
-      attachments: formRef.attachments.current.value,
+      attachments: formRef.attachments.current.files, 
       due: formRef.due.current.value,
       createdBy: user?.id,
       team: id
     }
-    await Client.post(`/tickets/team/${id}`, ticket)
+    await Client.post(`/tickets/team/${id}`, ticket, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
     navigate(`/teams/${id}`)
   }
   return (
@@ -89,10 +95,11 @@ const CreateTicket = ({ user }) => {
               Attachments
             </label>
             <input
-              type="text"
+              type="file"
               id="attachments"
               className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              required
+              name="attachments[]"
+              multiple="multiple"
               ref={formRef.attachments}
             />
           </div>
