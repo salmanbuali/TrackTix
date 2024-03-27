@@ -23,10 +23,10 @@ const DataBarChart = ({ tickets }) => {
       numOfPending++
     }
 
-    if (t.logs[2]) {
+    if (t.logs[t.logs.length - 1]?.status === "Complete") {
       totalProcessing =
         totalProcessing +
-        calculateTime(t.logs[1].timestamp, t.logs[2].timestamp)
+        calculateTime(t.logs[1].timestamp, t.logs[t.logs.length - 1].timestamp)
       numOfProcessing++
     }
   })
