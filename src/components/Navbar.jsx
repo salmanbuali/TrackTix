@@ -36,7 +36,7 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                     alt="logo"
                     style={{ filter: 'invert(1)' }}
                   />
-                  <p>&nbsp; TrackTix</p>
+                  <Link to='/'>&nbsp; TrackTix</Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex items-center gap-3">
