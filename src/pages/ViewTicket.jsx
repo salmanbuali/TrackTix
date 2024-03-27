@@ -10,7 +10,8 @@ import {
   ArrowLeftStartOnRectangleIcon,
   CheckIcon,
   LinkIcon,
-  DocumentArrowDownIcon
+  DocumentArrowDownIcon,
+  ChatBubbleLeftEllipsisIcon
 } from '@heroicons/react/24/outline'
 
 function classNames(...classes) {
@@ -104,9 +105,9 @@ const ViewTicket = ({ user }) => {
         <div className="mx-auto w-3/4 px-4 py-4 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 items-start gap-x-8 gap-y-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
             <div className="lg:col-start-3 lg:row-end-1">
-              <div className="rounded-lg bg-gray-50 dark:bg-slate-800 shadow-sm ring-1 ring-gray-900/5">
+              <div className="rounded-lg bg-gray-50 dark:bg-slate-800 shadow-xl ring-1 ring-gray-900/5">
                 <dl className="flex flex-wrap">
-                  <div className="flex-auto pl-6 pt-6 pb-6">
+                  <div className="flex-auto pl-6 pt-6 pb-6 max-h-48 overflow-y-scroll">
                     <dt className="flex gap-2 mb-5 font-semibold leading-6 text-lg text-gray-900 dark:text-white">
                       <LinkIcon className="size-5" />
                       Attachments
@@ -132,7 +133,7 @@ const ViewTicket = ({ user }) => {
               </div>
             </div>
 
-            <div className="shadow-sm ring-1 dark:bg-slate-800 ring-gray-900/5 sm:mx-0 sm:rounded-lg lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-12 xl:pt-16">
+            <div className="shadow-xl ring-1 bg-gray-50 dark:bg-slate-800 ring-gray-900/5 sm:mx-0 sm:rounded-lg lg:col-span-2 lg:row-span-2 lg:row-end-2 xl:px-16 xl:pb-12 xl:pt-16">
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-semibold leading-6 text-gray-900 dark:text-white">
                   {ticket.subject}
@@ -251,10 +252,13 @@ const ViewTicket = ({ user }) => {
               </div>
             </div>
 
-            <div className="lg:col-start-3">
+            <div className="lg:col-start-3 p-3 rounded-lg bg-gray-50 dark:bg-slate-800 shadow-xl ring-1 ring-gray-900/5">
               {/* Comment feed */}
               <h2 className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100">
-                Comments
+                <dt className="flex gap-2 mb-5 font-semibold leading-6 text-lg text-gray-900 dark:text-white">
+                  <ChatBubbleLeftEllipsisIcon className="size-5" />
+                  Comments
+                </dt>
               </h2>
 
               <ul
@@ -325,7 +329,7 @@ const ViewTicket = ({ user }) => {
                       <div className="absolute inset-x-0 bottom-0 flex py-2 pl-3 pr-2">
                         <button
                           type="submit"
-                          className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                          className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-blue-700 hover:text-white"
                           onClick={addComment}
                         >
                           Comment

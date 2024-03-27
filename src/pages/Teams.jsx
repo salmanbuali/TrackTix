@@ -59,7 +59,7 @@ const Teams = ({ user }) => {
       >
         {teams.map((team) => (
           <Link to={`/teams/${team._id}`} key={team.name}>
-            <li className="col-span-1 flex rounded-md overflow-hidden">
+            <li className="col-span-1 flex rounded-md overflow-hidden shadow-xl">
               <div className="flex items-center justify-center text-white bg-white dark:bg-gray-800 w-16 h-16">
                 <img
                   src={team.avatar}

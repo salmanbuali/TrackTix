@@ -31,12 +31,12 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
             <div className="flex h-16 items-center justify-between">
               <div className="flex items-center">
                 <div className="flex-shrink-0 text-white flex items-center">
-                  <img
+                <Link to='/' className='flex items-center'><img
                     src="/favicon.ico"
                     alt="logo"
                     style={{ filter: 'invert(1)' }}
                   />
-                  <Link to='/'>&nbsp; TrackTix</Link>
+                  &nbsp; TrackTix</Link>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex items-center gap-3">
