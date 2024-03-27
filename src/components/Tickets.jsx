@@ -128,7 +128,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
         {tickets?.slice(pageIndex, pageIndex + 6).map((ticket) => (
           <li
             key={ticket._id}
-            className="flex items-center bg-neutral-50 my-2 rounded-2xl justify-between gap-x-6 p-5 shadow-md"
+            className="flex items-center bg-neutral-50 dark:bg-gray-800 my-2 rounded-2xl justify-between gap-x-6 p-5 shadow-md"
           >
             <div className="min-w-0">
               <div className="flex items-start gap-x-3">
