@@ -28,7 +28,14 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex justify-center flex-col">
+    <div>
+      <button
+        onClick={back}
+        className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1 ml-3"
+      >
+        <ArrowUturnLeftIcon className="size-5" />
+        Team
+      </button>
       <div class="flex flex-row items-center w-4/5 m-auto gap-10">
         <div class="w-1/2">
           <DBarChart tickets={tickets} />
@@ -48,13 +55,6 @@ const Dashboard = () => {
             <ProcessChart team={team} tickets={tickets} />
           ) : null}
         </div>
-        <button
-          onClick={back}
-          className="mt-12 rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 dark:text-white shadow-sm dark:hover:bg-white/20 flex items-center hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border dark:border-gray-100 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white gap-1"
-        >
-          <ArrowUturnLeftIcon className="size-5" />
-          Team
-        </button>
       </div>
     </div>
   )
