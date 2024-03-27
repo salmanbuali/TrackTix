@@ -80,7 +80,7 @@ const Notifications = ({ open, setOpen, cancelButtonRef, user }) => {
                       </Dialog.Title>
 
                       <div className="mt-5">
-                        <ul className="h-28 overflow-y-scroll">
+                        <ul className="max-h-28 overflow-y-scroll">
                           {notifications?.map((noti, i) => (
                             <li
                               key={i}
