@@ -62,7 +62,7 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                         className="flex items-center rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
                       >
                         <UserGroupIcon className="h-6 w-6 mr-1" />
-                        My tickets
+                        My Tickets
                       </Link>
                     )}
                   </div>
@@ -91,7 +91,13 @@ const Navbar = ({ toggleDarkMode, user, handleLogOut }) => {
                       <Menu.Button className="relative flex rounded-full text-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="absolute -inset-1.5" />
 
-                        <UserIcon className="size-6" />
+                        {!user && <UserIcon className="size-6" />}
+                        {user && (
+                          <img
+                            src={user?.avatar}
+                            className="size-6 rounded-2xl"
+                          />
+                        )}
                       </Menu.Button>
                     </div>
                     <Transition
