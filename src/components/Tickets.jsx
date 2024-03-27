@@ -171,14 +171,13 @@ const Tickets = ({ teamId, user, members, manager }) => {
               </div>
             </div>
             <div className="flex flex-none items-center gap-x-4">
-              <div className="flex -space-x-2 overflow-hidden">
+              <div className="flex -space-x-2 overflow-hidden p-1">
                 {ticket.member.map((member) => (
                   <img
                     src={member.avatar}
                     alt="avatar"
-                    className="inline-block h-8 w-8 rounded-full ring-1 ring-black"
+                    className="inline-block h-8 w-8 m-1 rounded-full ring-1 ring-gray-400"
                   />
-                  // <p>{member.name}</p>
                 ))}
               </div>
               <p
