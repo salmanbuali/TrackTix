@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-export const BASE_URL = 'http://localhost:3000'
+export const BASE_URL = 'https://tracktixbackend-long-resonance-2403.fly.dev'
 
 const Client = Axios.create({ baseURL: BASE_URL })
 
