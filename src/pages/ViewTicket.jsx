@@ -13,6 +13,7 @@ import {
   DocumentArrowDownIcon,
   ChatBubbleLeftEllipsisIcon
 } from '@heroicons/react/24/outline'
+import { Spinner } from 'flowbite-react'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -23,6 +24,7 @@ const ViewTicket = ({ user }) => {
   let navigate = useNavigate()
   const [ticket, setTicket] = useState()
   const [update, setUpdate] = useState(false)
+  const [loadingReq, setLoadingReq] = useState(true)
   let content = useRef(null)
   // don't delete
   const statuses = {
@@ -43,6 +45,7 @@ const ViewTicket = ({ user }) => {
     const getTicket = async () => {
       const response = await Client.get(`/tickets/${id}`)
       setTicket(response.data)
+      setLoadingReq(false)
     }
     getTicket()
     setUpdate(false)
@@ -97,6 +100,14 @@ const ViewTicket = ({ user }) => {
         document.body.appendChild(link)
         link.click()
       })
+  }
+
+  if (loadingReq) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-10 m-auto" />
+      </div>
+    )
   }
 
   return (
