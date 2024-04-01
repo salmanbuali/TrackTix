@@ -3,22 +3,33 @@ import { Link } from 'react-router-dom'
 import { PlusCircleIcon, InboxArrowDownIcon } from '@heroicons/react/24/outline'
 import { useState, useEffect, useRef } from 'react'
 import InvitesDialog from '../components/InvitesDialog'
+import { Spinner } from 'flowbite-react'
 
 const Teams = ({ user }) => {
   const [teams, setTeams] = useState([])
   const [open, setOpen] = useState(false)
   const cancelButtonRef = useRef(null)
   const [checkInv, setCheckInv] = useState(false)
+  const [loadingReq, setLoadingReq] = useState(true)
 
   useEffect(() => {
     const getTeams = async () => {
       const response = await Client.get(`/users/${user?.id}/teams`)
       setTeams(response.data)
+      setLoadingReq(false)
     }
     getTeams()
   }, [checkInv, open])
 
-  return teams.length ? (
+  if (loadingReq) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-10 m-auto" />
+      </div>
+    )
+  }
+
+  return teams.length > 0 ? (
     <div className="w-3/4 m-auto">
       <InvitesDialog
         open={open}
