@@ -6,6 +6,7 @@ import AssignMemberDialog from './AssignMemberDialog'
 import Client from '../services/api'
 import moment from 'moment'
 import { Pagination } from 'flowbite-react'
+import { Spinner } from 'flowbite-react'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -20,6 +21,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
   const ticketToAssign = useRef(null)
   const [open, setOpen] = useState(false)
 
+  const [loadingReq, setLoadingReq] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageIndex, setPageIndex] = useState(0)
 
@@ -49,6 +51,7 @@ const Tickets = ({ teamId, user, members, manager }) => {
       const response = await Client.get(`/tickets/team/${teamId}`)
       setUnsortedTickets(response.data)
       setTickets(response.data)
+      setLoadingReq(false)
     }
     getTickets()
   }, [update, open])
@@ -96,6 +99,14 @@ const Tickets = ({ teamId, user, members, manager }) => {
         setSorted(!sorted)
         break
     }
+  }
+
+  if (loadingReq) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-10 m-auto" />
+      </div>
+    )
   }
 
   return tickets ? (

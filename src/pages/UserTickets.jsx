@@ -3,6 +3,7 @@ import Client from '../services/api'
 import moment from 'moment'
 import { useNavigate, Link, useParams } from 'react-router-dom'
 import { Pagination } from 'flowbite-react'
+import { Spinner } from 'flowbite-react'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -15,6 +16,7 @@ const UserTickets = () => {
   const orderRef = useRef(null)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageIndex, setPageIndex] = useState(0)
+  const [loadingReq, setLoadingReq] = useState(true)
   const onPageChange = (page) => {
     setCurrentPage(page)
     setPageIndex((page - 1) * 6)
@@ -39,6 +41,7 @@ const UserTickets = () => {
     const getTickets = async () => {
       const response = await Client.get(`/users/${id}`)
       setTickets(response.data.tickets)
+      setLoadingReq(false)
     }
     getTickets()
   }, [])
@@ -73,6 +76,14 @@ const UserTickets = () => {
         setSorted(!sorted)
         break
     }
+  }
+
+  if (loadingReq) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-10 m-auto" />
+      </div>
+    )
   }
 
   return tickets ? (

@@ -2,21 +2,33 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Client from '../services/api'
 import { UserCircleIcon, PencilSquareIcon } from '@heroicons/react/20/solid'
+import { Spinner } from 'flowbite-react'
 
 const Profile = () => {
   const { id } = useParams()
   const [user, setUser] = useState({})
+  const [loadingReq, setLoadingReq] = useState(true)
   let navigate = useNavigate()
   useEffect(() => {
     const getUser = async () => {
       const response = await Client.get(`/users/${id}`)
       setUser(response.data)
+      setLoadingReq(false)
     }
     getUser()
   }, [])
   const edit = () => {
     navigate(`/profile/${id}/edit`)
   }
+
+  if (loadingReq) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-10 m-auto" />
+      </div>
+    )
+  }
+
   return (
     <div>
       <div className="w-2/3 m-auto">

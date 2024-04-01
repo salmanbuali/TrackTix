@@ -13,6 +13,7 @@ import {
   ArrowLeftStartOnRectangleIcon,
   ChartPieIcon
 } from '@heroicons/react/24/solid'
+import { Spinner } from 'flowbite-react'
 
 const ViewTeam = ({ user }) => {
   let { id } = useParams()
@@ -23,6 +24,7 @@ const ViewTeam = ({ user }) => {
   const cancelButtonRef = useRef(null)
   const [manager, setManager] = useState(false)
   const [reload, setReload] = useState(false)
+  const [loadingReq, setLoadingReq] = useState(true)
 
   useEffect(() => {
     const getTeam = async () => {
@@ -31,6 +33,7 @@ const ViewTeam = ({ user }) => {
       if (response.data.manager._id === user?.id) {
         setManager(true)
       }
+      setLoadingReq(false)
     }
     getTeam()
   }, [reload])
@@ -46,6 +49,14 @@ const ViewTeam = ({ user }) => {
   const leave = async () => {
     await Client.put(`/teams/${id}/removemember/${user?.id}`)
     navigate('/teams')
+  }
+ 
+  if (loadingReq) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-10 m-auto" />
+      </div>
+    )
   }
 
   return (
