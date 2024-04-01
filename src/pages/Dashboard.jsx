@@ -6,12 +6,14 @@ import DataBarChart from '../components/DataBarChart'
 import PieChart from '../components/PieChart'
 import ProcessChart from '../components/ProcessChart'
 import { ArrowUturnLeftIcon } from '@heroicons/react/24/outline'
+import { Spinner } from 'flowbite-react'
 
 const Dashboard = () => {
   let navigate = useNavigate()
   const { teamId } = useParams()
   const [team, setTeam] = useState(null)
   const [tickets, setTickets] = useState(null)
+  const [loadingReq, setLoadingReq] = useState(true)
 
   useEffect(() => {
     const getTeam = async () => {
@@ -19,12 +21,21 @@ const Dashboard = () => {
       const ticketResponse = await Client.get(`/tickets/team/${teamId}`)
       setTickets(ticketResponse.data)
       setTeam(response.data)
+      setLoadingReq(false)
     }
     getTeam()
   }, [])
 
   const back = () => {
     navigate(`/teams/${teamId}`)
+  }
+
+  if (loadingReq) {
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner className="size-10 m-auto" />
+      </div>
+    )
   }
 
   return (
